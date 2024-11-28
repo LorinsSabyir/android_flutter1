@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.blue,
-          title: const Text('Boyshet animal'),
+          title: const Text('LORENZ TO-DO LIST'),
         ),
       ),
     );
