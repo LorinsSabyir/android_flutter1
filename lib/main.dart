@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.blue,
-          title: const Text('Boyshet denji'),
+          title: const Text('Boyshet sua'),
         ),
       ),
     );
