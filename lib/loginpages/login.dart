@@ -5,109 +5,123 @@ import 'package:flutter/material.dart';
 import 'package:android_flutter/components/textfield.dart';
 import 'package:android_flutter/signup/signup.dart';
 
+class Login extends StatefulWidget {
+  Login({super.key});
 
-  class Login extends StatelessWidget{
-     Login({super.key});
+  @override
+  State<Login> createState() => _LoginState();
+}
 
-    //text editing controller
-    final userController = TextEditingController();
-    final passController = TextEditingController();
+class _LoginState extends State<Login> {
+  //text editing controller
+  final userController = TextEditingController();
 
-    //Login User Button method
-    void loginUser(){
+  final passController = TextEditingController();
 
-    }
+  //Login User Button method
+  void loginUser() {}
 
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.grey[300],
+      body: SafeArea(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(height: 50),
 
-    @override
-    Widget build(BuildContext context){
-      return Scaffold(
-        backgroundColor: Colors.grey[300],
-        body: SafeArea(
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(height: 50),
+              //TODO change the logo
+              Icon(
+                Icons.lock,
+                size: 100,
+              ),
+              SizedBox(height: 50),
 
-                //logo
-                Icon(
-                  Icons.lock,
-                  size: 100,
+              //welcome back
+              Text(
+                'Hello! Welcome Back',
+                style: TextStyle(
+                  color: Colors.grey[800],
+                  fontSize: 18,
                 ),
-                SizedBox(height: 50),
+              ),
+              SizedBox(height: 50),
 
-                //welcomeback
-                Text(
-                  'Hello! Welcome Back',
-                  style: TextStyle(
-                    color: Colors.grey[800],
-                    fontSize: 18,
-                  ),
-                ),
-                SizedBox(height: 50),
+              //TODO get user input 
+              //username textfield
+              MyTextField(
+                controller: userController,
+                hintText: 'Username',
+                obscureText: false,
+              ),
+              SizedBox(height: 20),
 
-                //username textfield
-                MyTextField(
-                  controller: userController,
-                  hintText: 'Username',
-                  obscureText: false,
-                ),
-                SizedBox(height: 20),
+              // TODO get user input
+              //password textfield
+              MyTextField(
+                controller: passController,
+                hintText: 'Password',
+                obscureText: true,
+              ),
+              SizedBox(height: 15),
 
-                //password textfield
-                MyTextField(
-                  controller: passController,
-                  hintText:'Password',
-                  obscureText: true,
-                ),
-                SizedBox(height: 15),
-
-                //forgot password
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text(
-                        'Forget Password?',
-                        style: TextStyle(color: Colors.grey[700]),
-                      ), 
-                    ],
-                  ),
-                ),
-                SizedBox(height: 30),
-
-                //sign in button
-                Button(onTap: loginUser,),
-                SizedBox(height: 30),
-
-                // register
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+              // TODO link to the forgot password widget
+              //forgot password
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text("Don't Have an Account?"),
-                      ],
-                    ),
-                    const SizedBox(width: 6),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Sign Up",
-                          style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold)
-                        ),
-                      ],
+                    Text(
+                      'Forget Password?',
+                      style: TextStyle(color: Colors.grey[700]),
                     ),
                   ],
-                )
-              ],
-            )
-          )
-        )
-      );
-    }
+                ),
+              ),
+              SizedBox(height: 30),
+
+              // TODO sumbit and verify user input to the json
+              //sign in button
+              Button(
+                onTap: loginUser,
+              ),
+              SizedBox(height: 30),
+
+              // register
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Don't Have an Account?",
+                    overflow:
+                        TextOverflow.ellipsis, // Prevents text from overflowing
+                  ),
+                  const SizedBox(
+                      width: 6), // Adds spacing between the text elements
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => SignUpScreen()),
+                      );
+                    },
+                    child: Text(
+                      "Sign Up",
+                      style: TextStyle(
+                        color: Colors.blue,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ),
+        ),
+      ),
+    );
   }
+}
