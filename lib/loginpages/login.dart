@@ -36,7 +36,7 @@ import 'package:android_flutter/components/textfield.dart';
 
         //welcomeback
         Text(
-          'Hello! Welcome Back',
+          'HELLO! Welcome Back',
           style: TextStyle(
             color: Colors.grey[800],
             fontSize: 18,
@@ -75,7 +75,7 @@ import 'package:android_flutter/components/textfield.dart';
         ),
         SizedBox(height: 30),
 
-        //sign in button
+        //Log  in button
         Button(onTap: loginUser,),
         SizedBox(height: 30),
 
