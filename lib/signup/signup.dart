@@ -8,8 +8,8 @@ import 'package:android_flutter/components/textfield.dart';
      Signup({super.key});
 
     //text editing controller
-     final name = TextEditingController();
-     final last = TextEditingController();
+    final name = TextEditingController();
+    final last = TextEditingController();
     final userController = TextEditingController();
     final passController = TextEditingController();
 
