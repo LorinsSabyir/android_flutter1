@@ -84,7 +84,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               //password textfield
               MyTextField(
                 controller: passController,
-                hintText: 'Password cgru',
+                hintText: 'Password',
                 obscureText: true,
               ),
               SizedBox(height: 30),
