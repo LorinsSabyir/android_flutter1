@@ -67,22 +67,6 @@ class _LoginState extends State<Login> {
               ),
               SizedBox(height: 15),
 
-              // TODO link to the forgot password widget
-              //forgot password
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      'Forget Password?',
-                      style: TextStyle(color: Colors.grey[700]),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 30),
-
               // TODO sumbit and verify user input to the json
               //sign in button
               Button(
@@ -105,7 +89,7 @@ class _LoginState extends State<Login> {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => SignUpScreen()),
+                        MaterialPageRoute(builder: (_) => SignUpScreen()),
                       );
                     },
                     child: Text(
@@ -117,7 +101,7 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                 ],
-              )
+              ),
             ],
           ),
         ),
