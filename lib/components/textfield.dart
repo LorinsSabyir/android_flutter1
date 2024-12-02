@@ -4,12 +4,14 @@ class MyTextField extends StatelessWidget {
   final TextEditingController controller; // Ensure this is typed
   final String hintText;
   final bool obscureText;
+  final String? Function(String?)? validator; // Add validator parameter
 
   const MyTextField({
     super.key,
     required this.controller,
     required this.hintText,
     required this.obscureText,
+    this.validator, // Initialize validator
   });
 
   @override
@@ -42,12 +44,7 @@ class MyTextField extends StatelessWidget {
             filled: true,
             hintText: hintText,
           ),
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return 'Please enter the $hintText!';
-            }
-            return null; // No error
-          },
+          validator: validator,
         ),
       ),
     );

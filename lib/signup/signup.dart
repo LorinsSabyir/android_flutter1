@@ -16,12 +16,16 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   // Text Editing Controllers
   final name = TextEditingController();
+
   final last = TextEditingController();
+
   final userController = TextEditingController();
+
   final passController = TextEditingController();
+
   final confirmPassController = TextEditingController();
 
-  final _formKey = GlobalKey<FormState>(); // Form key for validation
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -72,19 +76,31 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   const SizedBox(height: 20),
 
+                  // Username textfield
                   MyTextField(
                     controller: userController,
                     hintText: 'Username',
                     obscureText: false,
+                    
                   ),
                   const SizedBox(height: 20),
 
+                  // Confirm Password field with validation
                   MyTextField(
-                    controller: passController,
-                    hintText: 'Password',
+                    controller: confirmPassController,
+                    hintText: 'Confirm Password',
                     obscureText: true,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please confirm your password';
+                      }
+                      if (value != passController.text) {
+                        return 'Passwords do not match';
+                      }
+                      return null;
+                    },
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 30),
 
                   MyTextField(
                     controller: confirmPassController,
@@ -99,7 +115,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     formKey: _formKey, // Pass the form key
                   ),
                   const SizedBox(height: 30),
-                  
+
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
