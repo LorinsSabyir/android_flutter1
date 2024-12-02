@@ -10,18 +10,24 @@ environment:
   sdk: ^3.5.3
 
 dependencies:
+  path_provider: ^2.0.11
   flutter:
     sdk: flutter
+  shared_preferences: ^2.0.15
+    
   flutter_localizations:
     sdk: flutter
   english_words: ^4.0.0
   provider: ^6.0.0
+  json_annotation: ^4.9.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   flutter_lints: ^5.0.0
+  build_runner: ^2.4.13
+  json_serializable: ^6.9.0
 
 flutter:
   uses-material-design: true
@@ -32,3 +38,4 @@ flutter:
   assets:
     # Add assets from the images directory to the application.
     - assets/images/
+    - assets/userAccount.json
