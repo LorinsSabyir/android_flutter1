@@ -61,15 +61,27 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       Expanded(
                         child: MyTextField(
                           controller: name,
-                          hintText: 'First Name',
+                          hintText: 'Firstname',
                           obscureText: false,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please input your Firstname';
+                            }
+                            return null;
+                          },
                         ),
                       ),
                       Expanded(
                         child: MyTextField(
                           controller: last,
-                          hintText: 'Last Name',
+                          hintText: 'Lastname',
                           obscureText: false,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please input your LastName';
+                            }
+                            return null;
+                          },
                         ),
                       ),
                     ],
@@ -81,11 +93,29 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     controller: userController,
                     hintText: 'Username',
                     obscureText: false,
-                    
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please input your Username';
+                      }
+                      return null;
+                    },
                   ),
                   const SizedBox(height: 20),
 
                   // Confirm Password field with validation
+                  MyTextField(
+                    controller: passController,
+                    hintText: 'Password',
+                    obscureText: true,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please input your Password';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 20),
+
                   MyTextField(
                     controller: confirmPassController,
                     hintText: 'Confirm Password',
@@ -99,13 +129,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       }
                       return null;
                     },
-                  ),
-                  const SizedBox(height: 30),
-
-                  MyTextField(
-                    controller: confirmPassController,
-                    hintText: 'Confirm Password',
-                    obscureText: true,
                   ),
                   const SizedBox(height: 30),
 

@@ -16,7 +16,6 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  
   final userController = TextEditingController();
 
   final passController = TextEditingController();
@@ -35,7 +34,8 @@ class _LoginState extends State<Login> {
     }
 
     // Check if the user exists (you can load user data from a file or SharedPreferences)
-    bool isValid = await _validateCredentials(userController.text, passController.text);
+    bool isValid =
+        await _validateCredentials(userController.text, passController.text);
 
     if (isValid) {
       // Show success message and navigate to next screen
@@ -70,7 +70,8 @@ class _LoginState extends State<Login> {
         final Map<String, dynamic> userData = jsonDecode(jsonString);
 
         // Check if username and password match
-        if (userData['userName'] == username && userData['passWord'] == password) {
+        if (userData['userName'] == username &&
+            userData['passWord'] == password) {
           return true; // Credentials are valid
         }
       }
@@ -110,6 +111,12 @@ class _LoginState extends State<Login> {
                 controller: userController,
                 hintText: 'Username',
                 obscureText: false,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please input your Username';
+                  }
+                  return null;
+                },
               ),
               const SizedBox(height: 20),
 
@@ -118,6 +125,12 @@ class _LoginState extends State<Login> {
                 controller: passController,
                 hintText: 'Password',
                 obscureText: true,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please input your Password';
+                  }
+                  return null;
+                },
               ),
               const SizedBox(height: 15),
 
@@ -126,7 +139,7 @@ class _LoginState extends State<Login> {
                 onTap: loginUser,
               ),
               const SizedBox(height: 30),
-              
+
               // Sign Up Option
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -137,7 +150,9 @@ class _LoginState extends State<Login> {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (_) => SignUpScreen(controller: _controller)),
+                        MaterialPageRoute(
+                            builder: (_) =>
+                                SignUpScreen(controller: _controller)),
                       );
                     },
                     child: const Text(
