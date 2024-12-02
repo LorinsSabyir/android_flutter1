@@ -1,25 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:android_flutter/components/button.dart';
+import 'package:android_flutter/components/submitButton.dart';
 import 'package:android_flutter/components/textfield.dart';
 import 'package:android_flutter/loginpages/login.dart';
+import 'package:android_flutter/entities/userCont.dart';
 
 class SignUpScreen extends StatefulWidget {
+  final UserController controller;
+
+  const SignUpScreen({super.key, required this.controller});
+
   @override
   State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  //text editing controller
+  // Text Editing Controllers
   final name = TextEditingController();
-
   final last = TextEditingController();
-
   final userController = TextEditingController();
-
   final passController = TextEditingController();
+  final confirmPassController = TextEditingController();
 
-  //Login User Button method
-  void loginUser() {}
+  final _formKey = GlobalKey<FormState>(); // Form key for validation
 
   @override
   Widget build(BuildContext context) {
@@ -27,104 +29,102 @@ class _SignUpScreenState extends State<SignUpScreen> {
       backgroundColor: Colors.grey[300],
       body: SafeArea(
         child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(height: 50),
-
-              //logo
-              Icon(
-                Icons.lock,
-                size: 100,
-              ),
-              SizedBox(height: 20),
-
-              //welcomeback
-              Text(
-                'CREATE YOUR ACCOUNT!',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 50),
-
-              // TODO get user name input
-              // Full name
-              Row(
-                children: [
-                  Expanded(
-                    child: MyTextField(
-                      controller: name, // Use a separate controller
-                      hintText: 'Your First Name',
-                      obscureText: false,
-                    ),
-                  ),
-                  Expanded(
-                    child: MyTextField(
-                      controller: last, // Use a different controller
-                      hintText: 'Last Name',
-                      obscureText: false,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 20),
-
-              // TODO get username input
-              //Username
-              MyTextField(
-                controller: userController,
-                hintText: 'Username',
-                obscureText: false,
-              ),
-              SizedBox(height: 20),
-
-              // TODO get password input
-              //password textfield
-              MyTextField(
-                controller: passController,
-                hintText: 'Password',
-                obscureText: true,
-              ),
-              SizedBox(height: 30),
-
-              // TODO submit button functionality
-              //Log  in button
-              Button(
-                onTap: loginUser,
-              ),
-              SizedBox(height: 30),
-
-              // register
-              Row(
+          child: SingleChildScrollView(
+            child: Form(
+              key: _formKey,
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    "Already Have an Account?",
-                    overflow:
-                        TextOverflow.ellipsis, // Prevents text from overflowing
+                  const SizedBox(height: 50),
+                  const Icon(
+                    Icons.lock,
+                    size: 100,
                   ),
-                  const SizedBox(
-                      width: 6), // Adds spacing between the text elements
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (_) => Login()),
-                      );
-                    },
-                    child: Text(
-                      "Log In",
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontWeight: FontWeight.bold,
-                      ),
+                  const SizedBox(height: 20),
+
+                  const Text(
+                    'CREATE YOUR ACCOUNT!',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
                     ),
+                  ),
+                  const SizedBox(height: 50),
+
+                  // Full name fields
+                  Row(
+                    children: [
+                      Expanded(
+                        child: MyTextField(
+                          controller: name,
+                          hintText: 'First Name',
+                          obscureText: false,
+                        ),
+                      ),
+                      Expanded(
+                        child: MyTextField(
+                          controller: last,
+                          hintText: 'Last Name',
+                          obscureText: false,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+
+                  MyTextField(
+                    controller: userController,
+                    hintText: 'Username',
+                    obscureText: false,
+                  ),
+                  const SizedBox(height: 20),
+
+                  MyTextField(
+                    controller: passController,
+                    hintText: 'Password',
+                    obscureText: true,
+                  ),
+                  const SizedBox(height: 20),
+
+                  MyTextField(
+                    controller: confirmPassController,
+                    hintText: 'Confirm Password',
+                    obscureText: true,
+                  ),
+                  const SizedBox(height: 30),
+
+                  // Sign Up Button
+                  SubmitButton(
+                    controller: widget.controller,
+                    formKey: _formKey, // Pass the form key
+                  ),
+                  const SizedBox(height: 30),
+                  
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text("Already Have an Account?"),
+                      const SizedBox(width: 6),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (_) => Login()),
+                          );
+                        },
+                        child: const Text(
+                          "Log In",
+                          style: TextStyle(
+                            color: Colors.blue,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
-            ],
+            ),
           ),
         ),
       ),
