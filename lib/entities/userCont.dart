@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path_provider/path_provider.dart';
 import 'user.dart';
@@ -48,7 +47,7 @@ class UserController {
       await file.writeAsString(userModel.toJson().toString());
       print('Data saved to $filePath');
     } catch (e) {
-      print('Error saving data to file: $e'); // Log error message
+      print('Error saving data to file: $e');
     }
   }
 

@@ -97,6 +97,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       if (value == null || value.isEmpty) {
                         return 'Please input your Username';
                       }
+                      if (value.length < 6) {
+                        return 'Username should not less than 6 characters';
+                      }
                       return null;
                     },
                   ),
@@ -110,6 +113,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please input your Password';
+                      }
+                      if (value.length < 6) {
+                        return 'Password should not less than 6 characters';
                       }
                       return null;
                     },
