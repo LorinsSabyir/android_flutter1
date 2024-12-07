@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
 
 class UserDashboard extends StatefulWidget {
   @override
+  // ignore: library_private_types_in_public_api
   _UserDashboardState createState() => _UserDashboardState();
 }
 
