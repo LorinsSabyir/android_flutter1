@@ -1,9 +1,10 @@
 import 'package:english_words/english_words.dart';
-import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/material.dart';
+import 'package:android_flutter/user_dashboard.dart'; // Import the user_dashboard.dart file. Adjust the path if needed.
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -12,12 +13,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.blue,
-          title: const Text('LORENZ TO-DO LIST'),
-        ),
-      ),
+      debugShowCheckedModeBanner: true, // Disable the debug banner
+      home: UserDashboard(), // Set UserDashboard as the home screen
     );
   }
 }

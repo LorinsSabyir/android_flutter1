@@ -5,21 +5,11 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "android_flutter",
-      "request": "launch",
-      "type": "dart"
-    },
-    {
-      "name": "android_flutter (profile mode)",
+      "name": "Flutter Web",
       "request": "launch",
       "type": "dart",
-      "flutterMode": "profile"
-    },
-    {
-      "name": "android_flutter (release mode)",
-      "request": "launch",
-      "type": "dart",
-      "flutterMode": "release"
+      "flutterMode": "debug",
+      "deviceId": "chrome"
     }
   ]
 }
