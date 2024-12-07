@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -21,13 +22,14 @@ class UserDashboard extends StatefulWidget {
 }
 
 class _UserDashboardState extends State<UserDashboard> {
-  // TextEditingControllers for text field
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController firstnameController = TextEditingController();
   final TextEditingController lastnameController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
+
+  File? _pickedImage;
 
   // Validation flags
   bool isUsernameValid = true;
@@ -43,7 +45,9 @@ class _UserDashboardState extends State<UserDashboard> {
     final pickedFile = await picker.pickImage(source: source);
 
     if (pickedFile != null) {
-      print('Picked file path: ${pickedFile.path}');
+      setState(() {
+        _pickedImage = File(pickedFile.path);
+      });
     } else {
       print('No image selected.');
     }
@@ -56,7 +60,7 @@ class _UserDashboardState extends State<UserDashboard> {
       isFirstnameValid = firstnameController.text.isNotEmpty;
       isLastnameValid = lastnameController.text.isNotEmpty;
       isPhoneValid = phoneController.text.isNotEmpty &&
-          RegExp(r'^\d{10,}$').hasMatch(phoneController.text);
+          RegExp(r'^\d{11,}$').hasMatch(phoneController.text);
       isPasswordValid = passwordController.text.length >= 6;
       isAddressValid = addressController.text.isNotEmpty;
     });
@@ -93,7 +97,9 @@ class _UserDashboardState extends State<UserDashboard> {
               // Profile section
               CircleAvatar(
                 radius: 50,
-                backgroundImage: AssetImage('assets/lorenz.png'),
+                backgroundImage: _pickedImage != null
+                    ? FileImage(_pickedImage!)
+                    : AssetImage('assets/placeholder.png') as ImageProvider,
                 onBackgroundImageError: (_, __) => print('Image load error'),
               ),
               SizedBox(height: 16),
@@ -230,7 +236,7 @@ class _UserDashboardState extends State<UserDashboard> {
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text('Please fix the errors before saving!'),
+              content: Text('Please fill up the required information!'),
               backgroundColor: Colors.red, // Error Snackbar color
             ),
           );
