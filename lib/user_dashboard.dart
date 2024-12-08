@@ -26,9 +26,7 @@ class _UserDashboardState extends State<UserDashboard> {
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController firstnameController = TextEditingController();
   final TextEditingController lastnameController = TextEditingController();
-  final TextEditingController phoneController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController addressController = TextEditingController();
 
   File? _pickedImage;
 
@@ -36,9 +34,7 @@ class _UserDashboardState extends State<UserDashboard> {
   bool isUsernameValid = true;
   bool isFirstnameValid = true;
   bool isLastnameValid = true;
-  bool isPhoneValid = true;
   bool isPasswordValid = true;
-  bool isAddressValid = true;
 
   // Function to pick an image
   void pickImage(ImageSource source) async {
@@ -60,18 +56,13 @@ class _UserDashboardState extends State<UserDashboard> {
       isUsernameValid = usernameController.text.isNotEmpty;
       isFirstnameValid = firstnameController.text.isNotEmpty;
       isLastnameValid = lastnameController.text.isNotEmpty;
-      isPhoneValid = phoneController.text.isNotEmpty &&
-          RegExp(r'^\d{11,}$').hasMatch(phoneController.text);
       isPasswordValid = passwordController.text.length >= 6;
-      isAddressValid = addressController.text.isNotEmpty;
     });
 
     return isUsernameValid &&
         isFirstnameValid &&
         isLastnameValid &&
-        isPhoneValid &&
-        isPasswordValid &&
-        isAddressValid;
+        isPasswordValid;
   }
 
   @override
@@ -156,23 +147,11 @@ class _UserDashboardState extends State<UserDashboard> {
                 isValid: isLastnameValid,
               ),
               buildTextField(
-                controller: phoneController,
-                label: 'Change Phone',
-                icon: Icons.phone,
-                isValid: isPhoneValid,
-              ),
-              buildTextField(
                 controller: passwordController,
                 label: 'Change Password',
                 icon: Icons.lock,
                 obscureText: true,
                 isValid: isPasswordValid,
-              ),
-              buildTextField(
-                controller: addressController,
-                label: 'Edit Address',
-                icon: Icons.home,
-                isValid: isAddressValid,
               ),
               SizedBox(height: 16),
 
