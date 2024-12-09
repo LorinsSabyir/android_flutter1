@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:android_flutter/pages/home_page.dart';
 
 class Button extends StatelessWidget{
 
@@ -8,7 +9,12 @@ class Button extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
   return GestureDetector(
-    onTap: onTap,
+    onTap: () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (_) => HomePage()),
+      );
+    },
     child: Container(
       padding: EdgeInsets.all(25),
       margin: EdgeInsets.symmetric(horizontal: 25),

@@ -1,3 +1,4 @@
+import 'package:android_flutter/loginpages/login.dart';
 import 'package:flutter/material.dart';
 import 'package:android_flutter/components/my_list_tile.dart';
 
@@ -20,7 +21,7 @@ class MyDrawer extends StatelessWidget {
                   child: Image.asset(
                     'assets/redlock1.png', // Replace with your image path
                     width: 390, // Adjust size as needed
-                    height:390, // Adjust size as needed
+                    height: 390, // Adjust size as needed
                   ),
                 ),
               ),
@@ -51,11 +52,12 @@ class MyDrawer extends StatelessWidget {
             child: MyListTile(
               text: "Exit",
               icon: Icons.logout,
-              onTap: () => Navigator.pushNamedAndRemoveUntil(
-                context,
-                '/intro_page',
-                (route) => false,
-              ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => Login()),
+                );
+              },
             ),
           ),
         ],
