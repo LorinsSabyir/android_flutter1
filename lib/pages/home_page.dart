@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:android_flutter/ciphers/threeciphers.dart';
-import 'package:android_flutter/components/my_drawer.dart';
-import 'package:android_flutter/components/tiles.dart';
+import 'package:android_nga_flutter/ciphers/threeciphers.dart';
+import 'package:android_nga_flutter/components/my_drawer.dart';
+import 'package:android_nga_flutter/components/tiles.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {

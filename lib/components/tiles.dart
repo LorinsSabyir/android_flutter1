@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:android_flutter/ciphers/details.dart';
+import 'package:android_nga_flutter/ciphers/details.dart';
 
 class MyProductTile extends StatelessWidget {
   final Details product;

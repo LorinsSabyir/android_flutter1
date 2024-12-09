@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:android_flutter/ciphers/details.dart';
+import 'package:android_nga_flutter/ciphers/details.dart';
 
 class Shop extends ChangeNotifier {
   final List<Details> _shop = [

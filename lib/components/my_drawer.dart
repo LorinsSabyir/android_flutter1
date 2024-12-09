@@ -1,6 +1,6 @@
-import 'package:android_flutter/loginpages/login.dart';
+import 'package:android_nga_flutter/login/login.dart';
 import 'package:flutter/material.dart';
-import 'package:android_flutter/components/my_list_tile.dart';
+import 'package:android_nga_flutter/components/my_list_tile.dart';
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({super.key});
