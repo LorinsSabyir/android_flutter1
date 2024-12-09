@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'loginpages/login.dart';
-import 'package:android_flutter/ciphers/threeciphers.dart';
-import 'package:provider/provider.dart'; 
-import 'package:android_flutter/loginpages/login.dart';
 
 void main() {
   runApp(MyApp());
