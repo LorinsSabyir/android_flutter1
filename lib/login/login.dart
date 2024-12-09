@@ -1,3 +1,4 @@
+import 'package:android_nga_flutter/home/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:android_nga_flutter/components/textfield.dart';
 import 'package:android_nga_flutter/signup/signup.dart';
@@ -33,12 +34,12 @@ class _LoginState extends State<Login> {
             const SnackBar(content: Text('Login successful!')),
           );
 
-          // TODO: Replace with your actual home navigation logic
+          // Replace with your actual home navigation logic
           Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (context) =>
-                    const Placeholder()), // Replace with home page
+                    const HomePage()), // Replace with home page
           );
         } else {
           print('Invalid username or password');
