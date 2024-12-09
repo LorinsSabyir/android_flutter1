@@ -1,4 +1,4 @@
-import 'package:android_nga_flutter/dashboard/dashboard_page.dart';
+import 'package:android_nga_flutter/dashboard/user_dashboard.dart';
 import 'package:android_nga_flutter/login/login.dart';
 import 'package:flutter/material.dart';
 import 'package:android_nga_flutter/components/my_list_tile.dart';

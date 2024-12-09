@@ -2,27 +2,13 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: UserDashboard(),
-    );
-  }
-}
-
-class UserDashboard extends StatefulWidget {
+class DashboardPage extends StatefulWidget {
   @override
   // ignore: library_private_types_in_public_api
-  _UserDashboardState createState() => _UserDashboardState();
+  _DashboardPageState createState() => _DashboardPageState();
 }
 
-class _UserDashboardState extends State<UserDashboard> {
+class _DashboardPageState extends State<DashboardPage> {
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController firstnameController = TextEditingController();
   final TextEditingController lastnameController = TextEditingController();
