@@ -46,5 +46,4 @@ class MyTextField extends StatelessWidget {
       ),
     );
   }
-
-}//dont remove
+}
