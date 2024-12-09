@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:android_nga_flutter/ciphers/details.dart';
+import 'package:android_nga_flutter/components/cypher_details.dart';
 
 class MyProductTile extends StatelessWidget {
   final Details product;
@@ -56,16 +56,29 @@ class MyProductTile extends StatelessWidget {
           const SizedBox(height: 25),
           Row(
             children: [
-              Container(
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.secondary,
-                  borderRadius: BorderRadius.circular(8),
+              GestureDetector(
+                onTap: () {
+                  // Navigate to another file or screen
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          TargetScreen(), // Replace with your target screen widget
+                    ),
+                  );
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.secondary,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: IconButton(
+                    onPressed:
+                        null, // Optional: Disable IconButton since GestureDetector handles the tap
+                    icon: const Icon(Icons.arrow_forward),
+                  ),
                 ),
-                child: IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.arrow_forward),
-                ),
-              )
+              ),
             ],
           )
         ],

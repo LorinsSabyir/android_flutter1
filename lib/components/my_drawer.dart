@@ -1,3 +1,4 @@
+import 'package:android_nga_flutter/dashboard/dashboard_page.dart';
 import 'package:android_nga_flutter/login/login.dart';
 import 'package:flutter/material.dart';
 import 'package:android_nga_flutter/components/my_list_tile.dart';
@@ -27,20 +28,15 @@ class MyDrawer extends StatelessWidget {
               ),
               const SizedBox(height: 25),
 
-              // Home menu item
-              MyListTile(
-                text: "Home",
-                icon: Icons.home,
-                onTap: () => Navigator.pop(context),
-              ),
-
               // Dashboard menu item
               MyListTile(
                 text: "Dashboard",
                 icon: Icons.dashboard,
                 onTap: () {
-                  Navigator.pop(context);
-                  Navigator.pushNamed(context, '/dashboard_page');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => DashboardPage()),
+                  );
                 },
               ),
             ],
