@@ -1,4 +1,4 @@
-import 'package:android_nga_flutter/pages/home_page.dart';
+import 'package:android_nga_flutter/home/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:android_nga_flutter/components/textfield.dart';
 import 'package:android_nga_flutter/signup/signup.dart';
