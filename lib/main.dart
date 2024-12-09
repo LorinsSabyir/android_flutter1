@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
+import 'loginpages/login.dart';
 import 'package:android_flutter/ciphers/threeciphers.dart';
 import 'package:provider/provider.dart'; 
 import 'package:android_flutter/loginpages/login.dart';
 
 void main() {
-  runApp(
-    ChangeNotifierProvider(
-      create: (context) => Shop(),
-      child: const MyApp(),
-    ),
-  );
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -17,9 +13,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Login(),
+    return  MaterialApp(
+     debugShowCheckedModeBanner: false,
+     home: Login(),
     );
   }
 }
