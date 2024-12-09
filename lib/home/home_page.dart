@@ -1,17 +1,14 @@
-import 'package:flutter/material.dart';
-import 'package:android_nga_flutter/components/threeciphers.dart';
+import 'package:android_nga_flutter/home/home_atbash.dart';
+import 'package:android_nga_flutter/home/home_ceasar.dart';
+import 'package:android_nga_flutter/home/home_vigenere.dart';
 import 'package:android_nga_flutter/components/my_drawer.dart';
-import 'package:android_nga_flutter/components/tiles.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Access the products using context.watch
-    final products = context.watch<Shop>().shop;
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -40,14 +37,14 @@ class HomePage extends StatelessWidget {
           // Horizontal product list
           SizedBox(
             height: 590,
-            child: ListView.builder(
-              itemCount: products.length,
+            child: ListView(
               scrollDirection: Axis.horizontal,
               padding: const EdgeInsets.all(15),
-              itemBuilder: (context, index) {
-                final product = products[index];
-                return MyProductTile(product: product);
-              },
+              children: [
+                HomeAtbash(),
+                HomeCaesar(),
+                HomeVigenere(),
+              ],
             ),
           ),
         ],

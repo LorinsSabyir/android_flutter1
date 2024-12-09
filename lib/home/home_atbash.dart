@@ -1,9 +1,8 @@
+import 'package:android_nga_flutter/ciphers/atbash.dart';
 import 'package:flutter/material.dart';
-import 'package:android_nga_flutter/components/cypher_details.dart';
 
-class MyProductTile extends StatelessWidget {
-  final Details product;
-  const MyProductTile({super.key, required this.product});
+class HomeAtbash extends StatelessWidget {
+  const HomeAtbash({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -31,14 +30,14 @@ class MyProductTile extends StatelessWidget {
                   width: double.infinity,
                   padding: const EdgeInsets.all(25),
                   child: Image.asset(
-                    product.imagePath, // Use the instance's imagePath
+                    "assets/IM1.jpg", // Use the instance's imagePath
                     fit: BoxFit.cover, // Ensure the image fits properly
                   ),
                 ),
               ),
               const SizedBox(height: 25),
               Text(
-                product.name,
+                "Atbash Cipher",
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
@@ -46,7 +45,7 @@ class MyProductTile extends StatelessWidget {
               ),
               const SizedBox(height: 5),
               Text(
-                product.description,
+                "A monoalphabetic cipher that substitutes letters with their reverse counterpart, it is weak due to its predictability and susceptibility to brute force.",
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.inversePrimary,
                 ),
@@ -63,7 +62,7 @@ class MyProductTile extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) =>
-                          TargetScreen(), // Replace with your target screen widget
+                          Atbash(), // Replace with your target screen widget
                     ),
                   );
                 },
