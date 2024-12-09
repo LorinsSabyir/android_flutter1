@@ -1,25 +1,22 @@
+import 'package:android_nga_flutter/components/textfield.dart';
+import 'package:android_nga_flutter/entity/userCont.dart';
 import 'package:flutter/material.dart';
-import 'package:android_flutter/components/button.dart';
-import 'package:android_flutter/components/textfield.dart';
-import 'package:android_flutter/loginpages/login.dart';
+import 'package:android_nga_flutter/login/login.dart';
 
-class SignUpScreen extends StatefulWidget {
-  @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
-}
+class Signup extends StatelessWidget {
+  final _userController = UserCont();
 
-class _SignUpScreenState extends State<SignUpScreen> {
-  //text editing controller
-  final name = TextEditingController();
+  // Text Editing Controllers
+  final _firstNameController = TextEditingController();
+  final _lastNameController = TextEditingController();
+  final _usernameController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _confirmPassController = TextEditingController();
 
-  final last = TextEditingController();
+  // Form key for validation
+  final _formKey = GlobalKey<FormState>();
 
-  final userController = TextEditingController();
-
-  final passController = TextEditingController();
-
-  //Login User Button method
-  void loginUser() {}
+  Signup({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,104 +24,196 @@ class _SignUpScreenState extends State<SignUpScreen> {
       backgroundColor: Colors.grey[300],
       body: SafeArea(
         child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(height: 50),
-
-              //logo
-              Icon(
-                Icons.lock,
-                size: 100,
-              ),
-              SizedBox(height: 20),
-
-              //welcomeback
-              Text(
-                'CREATE YOUR ACCOUNT!',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 50),
-
-              // TODO get user name input
-              // Full name
-              Row(
-                children: [
-                  Expanded(
-                    child: MyTextField(
-                      controller: name, // Use a separate controller
-                      hintText: 'Your First Name',
-                      obscureText: false,
-                    ),
-                  ),
-                  Expanded(
-                    child: MyTextField(
-                      controller: last, // Use a different controller
-                      hintText: 'Last Name',
-                      obscureText: false,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 20),
-
-              // TODO get username input
-              //Username
-              MyTextField(
-                controller: userController,
-                hintText: 'Username',
-                obscureText: false,
-              ),
-              SizedBox(height: 20),
-
-              // TODO get password input
-              //password textfield
-              MyTextField(
-                controller: passController,
-                hintText: 'Password',
-                obscureText: true,
-              ),
-              SizedBox(height: 30),
-
-              // TODO submit button functionality
-              //Log  in button
-              Button(
-                onTap: loginUser,
-              ),
-              SizedBox(height: 30),
-
-              // register
-              Row(
+          child: SingleChildScrollView(
+            child: Form(
+              key: _formKey,
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    "Already Have an Account?",
-                    overflow:
-                        TextOverflow.ellipsis, // Prevents text from overflowing
+                  const SizedBox(height: 50),
+                  const Icon(Icons.lock, size: 100),
+                  const SizedBox(height: 20),
+                  const Text(
+                    'CREATE YOUR ACCOUNT!',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
-                  const SizedBox(
-                      width: 6), // Adds spacing between the text elements
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (_) => Login()),
-                      );
+                  const SizedBox(height: 50),
+
+                  // Full name fields
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Textfield(
+                          controller: _firstNameController,
+                          hintText: 'Firstname',
+                          obscureText: false,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please input your Firstname';
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Textfield(
+                          controller: _lastNameController,
+                          hintText: 'Lastname',
+                          obscureText: false,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please input your Lastname';
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+
+                  // Username textfield
+                  Textfield(
+                    controller: _usernameController,
+                    hintText: 'Username',
+                    obscureText: false,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please input your Username';
+                      }
+                      return null;
                     },
-                    child: Text(
-                      "Log In",
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontWeight: FontWeight.bold,
+                  ),
+                  const SizedBox(height: 20),
+
+                  // Password fields with validation
+                  Textfield(
+                    controller: _passwordController,
+                    hintText: 'Password',
+                    obscureText: true,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please input your Password';
+                      }
+                      if (value.length < 6) {
+                        return 'Password must be at least 6 characters';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  Textfield(
+                    controller: _confirmPassController,
+                    hintText: 'Confirm Password',
+                    obscureText: true,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please confirm your password';
+                      }
+                      if (value != _passwordController.text) {
+                        return 'Passwords do not match';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 30),
+
+                  // Sign Up Button
+                  ElevatedButton(
+                    onPressed: () async {
+                      if (_formKey.currentState?.validate() == true) {
+                        print('Form validation successful!'); // Debugging output
+                        try {
+                          print('Attempting to register user...'); // Debugging output
+                          await _userController.registerUser(
+                            _firstNameController.text.trim(),
+                            _lastNameController.text.trim(),
+                            _usernameController.text.trim(),
+                            _passwordController.text.trim(),
+                          );
+                          print('User registration successful!'); // Debugging output
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('User registered successfully'),
+                            ),
+                          );
+
+                          // Clear the text fields after success
+                          _firstNameController.clear();
+                          _lastNameController.clear();
+                          _usernameController.clear();
+                          _passwordController.clear();
+                          _confirmPassController.clear();
+
+                          // Navigate to login page
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (_) => const Login()),
+                          );
+                        } catch (e) {
+                          print('Error during registration: $e'); // Debugging output
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                e.toString().contains('User already exists')
+                                    ? 'This username is already taken'
+                                    : 'An error occurred. Please try again.',
+                              ),
+                            ),
+                          );
+                        }
+                      } else {
+                        print('Form validation failed.'); // Debugging output
+                      }
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(25),
+                      // margin: EdgeInsets.symmetric(horizontal: 25),
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: const Center(
+                        child: Text(
+                          'Sign Up',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
                     ),
                   ),
+                  const SizedBox(height: 20),
+
+                  // Login redirect
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text("Already Have an Account?"),
+                      const SizedBox(width: 6),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (_) => const Login()),
+                          );
+                        },
+                        child: const Text(
+                          "Log In",
+                          style: TextStyle(
+                            color: Colors.blue,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
               ),
-            ],
+            ),
           ),
         ),
       ),

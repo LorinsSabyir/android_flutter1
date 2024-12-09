@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 
-class MyTextField extends StatelessWidget {
-  final controller;
+class Textfield extends StatelessWidget {
+  final TextEditingController controller;
   final String hintText;
   final bool obscureText;
+  final String? Function(String?)? validator;
 
-  const MyTextField({
+  const Textfield({
     super.key,
     required this.controller,
     required this.hintText,
     required this.obscureText,
+    this.validator,
   });
 
   @override
