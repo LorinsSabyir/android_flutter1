@@ -20,7 +20,6 @@ class _LoginState extends State<Login> {
 
   Future<void> loginUser() async {
     if (_formKey.currentState?.validate() == true) {
-      print('Form validation successful!'); // Debugging output
       try {
         print('Attempting login...');
         bool isAuthenticated = await _userController.loginUser(
@@ -29,7 +28,18 @@ class _LoginState extends State<Login> {
         );
 
         if (isAuthenticated) {
+          // Loading screen
+          showDialog(
+            context: context,
+            builder: (context) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            },
+          );
+
           print('Login successful!');
+
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Login successful!')),
           );
@@ -42,7 +52,6 @@ class _LoginState extends State<Login> {
                     const HomePage()), // Replace with home page
           );
         } else {
-          print('Invalid username or password');
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Invalid username or password')),
           );

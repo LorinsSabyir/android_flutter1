@@ -58,6 +58,22 @@ class UserCont {
     return false;
   }
 
+  // Fetch user
+  Future<User?> fetchCurrentUser() async {
+    final prefs = await SharedPreferences.getInstance();
+    String? currentUserId = prefs.getString('loggedInUserId');
+    if (currentUserId == null) return null;
+
+    List<String> users = prefs.getStringList('users') ?? [];
+    for (String userJson in users) {
+      final userMap = jsonDecode(userJson);
+      if (userMap['id'] == currentUserId) {
+        return User.fromJson(userMap);
+      }
+    }
+    return null;
+  }
+
   // Update user
   Future<void> updateUser(
       String userId, Map<String, dynamic> updatedFields) async {
