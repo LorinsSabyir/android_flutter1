@@ -93,6 +93,7 @@ class _LoginState extends State<Login> {
                     controller: _usernameController,
                     hintText: 'Username',
                     obscureText: false,
+                    icon: Icons.lock,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please input your Username';
@@ -107,6 +108,7 @@ class _LoginState extends State<Login> {
                     controller: _passwordController,
                     hintText: 'Password',
                     obscureText: true,
+                    icon: Icons.lock,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please input your Password';

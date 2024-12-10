@@ -47,6 +47,7 @@ class Signup extends StatelessWidget {
                           controller: _firstNameController,
                           hintText: 'Firstname',
                           obscureText: false,
+                          icon: Icons.lock,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please input your Firstname';
@@ -61,6 +62,7 @@ class Signup extends StatelessWidget {
                           controller: _lastNameController,
                           hintText: 'Lastname',
                           obscureText: false,
+                          icon: Icons.lock,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please input your Lastname';
@@ -78,6 +80,7 @@ class Signup extends StatelessWidget {
                     controller: _usernameController,
                     hintText: 'Username',
                     obscureText: false,
+                    icon: Icons.lock,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please input your Username';
@@ -92,6 +95,7 @@ class Signup extends StatelessWidget {
                     controller: _passwordController,
                     hintText: 'Password',
                     obscureText: true,
+                    icon: Icons.lock,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please input your Password';
@@ -107,6 +111,7 @@ class Signup extends StatelessWidget {
                     controller: _confirmPassController,
                     hintText: 'Confirm Password',
                     obscureText: true,
+                    icon: Icons.lock,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please confirm your password';
