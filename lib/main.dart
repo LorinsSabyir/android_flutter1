@@ -1,15 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:android_nga_flutter/login/login.dart';
-import 'package:android_nga_flutter/ciphers/threeciphers.dart';
-import 'package:provider/provider.dart';
 
 void main() {
-  runApp(
-    ChangeNotifierProvider(
-      create: (context) => Shop(),
-      child: const MyApp(),
-    ),
-  );
+  runApp(MyApp(),);
 }
 
 class MyApp extends StatelessWidget {
@@ -17,7 +10,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Login(),
     );

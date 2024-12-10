@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:android_nga_flutter/test/components/textfield.dart';
-import 'package:android_nga_flutter/test/components/result.dart';
-import 'package:android_nga_flutter/test/components/button.dart';
+import 'package:android_nga_flutter/components/cypher_textfield.dart';
+import 'package:android_nga_flutter/components/cypher_result.dart';
+import 'package:android_nga_flutter/components/cypher_button.dart';
 
 
 class Atbash extends StatefulWidget {
