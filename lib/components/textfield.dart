@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class Textfield extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
+  final IconData icon;
   final bool obscureText;
   final String? Function(String?)? validator;
 
@@ -10,6 +11,7 @@ class Textfield extends StatelessWidget {
     super.key,
     required this.controller,
     required this.hintText,
+    required this.icon,
     required this.obscureText,
     this.validator,
   });
@@ -37,6 +39,7 @@ class Textfield extends StatelessWidget {
               borderSide: const BorderSide(color: Colors.white),
               borderRadius: BorderRadius.circular(10),
             ),
+            prefixIcon: Icon(icon, color: Colors.black),
             focusedBorder: OutlineInputBorder(
               borderSide: BorderSide(color: Colors.grey.shade400),
             ),
