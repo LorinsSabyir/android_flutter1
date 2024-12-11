@@ -50,6 +50,10 @@ class _AtbashState extends State<Atbash> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        backgroundColor: Colors.black.withOpacity(0.1),
+      ),
       backgroundColor: Colors.grey[300],
       body: SafeArea(
         child: Center(
