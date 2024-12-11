@@ -1,5 +1,5 @@
-import 'package:android_nga_flutter/home/home_page.dart';
 import 'package:flutter/material.dart';
+import 'package:android_nga_flutter/home/home_page.dart';
 import 'package:android_nga_flutter/components/textfield.dart';
 import 'package:android_nga_flutter/signup/signup.dart';
 import 'package:android_nga_flutter/entity/userCont.dart';
@@ -12,7 +12,7 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  final _userController = UserCont(); // Reference to UserCont
+  final _userController = UserController(); // Reference to UserCont
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -45,11 +45,9 @@ class _LoginState extends State<Login> {
           );
 
           // Replace with your actual home navigation logic
-          Navigator.push(
+          Navigator.pushReplacement(
             context,
-            MaterialPageRoute(
-                builder: (context) =>
-                    const HomePage()), // Replace with home page
+            MaterialPageRoute(builder: (context) => const HomePage()), // Replace with home page
           );
         } else {
           ScaffoldMessenger.of(context).showSnackBar(

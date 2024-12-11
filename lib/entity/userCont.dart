@@ -1,18 +1,33 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:path_provider/path_provider.dart';
-
 import 'package:android_nga_flutter/entity/userModel.dart';
 
 class UserController {
+  final String _folderName = "data";
   final String _fileName = "users.json";
 
-  Future<File> _getLocalFile() async {
-    final directory = await getApplicationDocumentsDirectory();
-    return File('${directory.path}/$_fileName');
+  // Create folder inside project directory
+  Future<Directory> _getLocalFolder() async {
+    final directory = Directory.current; // Get current working directory
+    final folderPath = '${directory.path}/$_folderName'; // Add folder name
+    final folder = Directory(folderPath);
+
+    if (!await folder.exists()) {
+      print("Folder does not exist. Creating folder...");
+      await folder.create();
+    }
+    return folder;
   }
 
+  // Json directory inside project directory
+  Future<File> _getLocalFile() async {
+    final folder = await _getLocalFolder();
+    print("Userdata is saved into ${folder.path}");
+    return File('${folder.path}/$_fileName');
+  }
+
+  // Read users
   Future<List<User>> _readUsersFromFile() async {
     try {
       final file = await _getLocalFile();
@@ -21,6 +36,7 @@ class UserController {
         final List<dynamic> jsonData = json.decode(contents);
         return jsonData.map((data) => User.fromJson(data)).toList();
       } else {
+        print("File does not exist. Returning empty list.");
         return [];
       }
     } catch (e) {
@@ -29,40 +45,132 @@ class UserController {
     }
   }
 
+  // Create new user
   Future<void> _writeUsersToFile(List<User> users) async {
+    print("Writing users to file...");
     try {
       final file = await _getLocalFile();
-      final jsonData = json.encode(users.map((user) => user.toJson()).toList());
-      await file.writeAsString(jsonData);
+      final List<Map<String, dynamic>> jsonData =
+          users.map((user) => user.toJson()).toList();
+      await file.writeAsString(json.encode(jsonData));
+      print("Users written to file successfully.");
     } catch (e) {
-      print("Error writing users: $e");
+      print("Error writing users to file: $e");
     }
   }
 
-  Future<void> createUser(User user) async {
-    final users = await _readUsersFromFile();
-    users.add(user);
-    await _writeUsersToFile(users);
+  // Login user
+  Future<bool> loginUser(String username, String password) async {
+    print("Attempting to log in user...");
+    try {
+      final users = await _readUsersFromFile();
+      for (var user in users) {
+        if (user.userName == username && user.passWord == password) {
+          print("Login successful for user: $username");
+          return true; // User found and password matches
+        }
+      }
+      print("Login failed. Invalid username or password.");
+      return false; // Invalid username or password
+    } catch (e) {
+      print("Error during login: $e");
+      return false;
+    }
   }
 
-  Future<List<User>> readUsers() async {
-    return await _readUsersFromFile();
-  }
+  Future<void> registerUser(String firstName, String lastName, String userName,
+      String passWord) async {
+    print("Attempting to register user: $userName");
+    try {
+      final users = await _readUsersFromFile();
 
-  Future<void> updateUser(String id, User updatedUser) async {
-    final users = await _readUsersFromFile();
-    final userIndex = users.indexWhere((user) => user.id == id);
-    if (userIndex != -1) {
-      users[userIndex] = updatedUser;
+      // Check if the username already exists
+      if (users.any((user) => user.userName == userName)) {
+        print("User already exists: $userName");
+        throw Exception('User already exists');
+      }
+
+      // Generate an incremental ID for the new user
+      int newId = 1; // Start with ID 1
+      if (users.isNotEmpty) {
+        // Find the maximum existing ID and increment by 1
+        newId = users.map((user) => int.tryParse(user.id) ?? 0).fold(0, (prev, element) => element > prev ? element : prev) + 1;
+      }
+
+      // Create the new user with the generated ID
+      final newUser = User(
+        id: newId.toString(), // Use the incremented ID
+        firstName: firstName,
+        lastName: lastName,
+        userName: userName,
+        passWord: passWord,
+      );
+
+      users.add(newUser);
+
+      // Write the updated user list to the file
       await _writeUsersToFile(users);
-    } else {
-      print("User with id $id not found.");
+      print("User registered successfully: $userName");
+    } catch (e) {
+      print("Error during registration: $e");
+      rethrow;
     }
   }
 
+
+  // Update user
+  Future<void> updateUser(
+      String id, String firstName, String lastName, String passWord) async {
+    print("Attempting to update user with ID: $id");
+    try {
+      final users = await _readUsersFromFile();
+
+      // Find the user and update their data
+      final index = users.indexWhere((user) => user.id == id);
+      if (index != -1) {
+        users[index] = User(
+          id: id, // ID remains the same
+          firstName: firstName,
+          lastName: lastName,
+          userName: users[index].userName, // Retain existing username
+          passWord: passWord,
+        );
+
+        // Write the updated user list to the file
+        await _writeUsersToFile(users);
+        print("User updated successfully: $id");
+      } else {
+        print("User not found: $id");
+        throw Exception('User not found');
+      }
+    } catch (e) {
+      print("Error during updating user: $e");
+      rethrow;
+    }
+  }
+
+  // Delete user
   Future<void> deleteUser(String id) async {
-    final users = await _readUsersFromFile();
-    users.removeWhere((user) => user.id == id);
-    await _writeUsersToFile(users);
+    print("Attempting to delete user with ID: $id");
+    try {
+      final users = await _readUsersFromFile();
+
+      // Find the user index to delete
+      final index = users.indexWhere((user) => user.id == id);
+      if (index != -1) {
+        // Remove the user from the list
+        users.removeAt(index);
+        print("User deleted successfully: $id");
+
+        // Write the updated user list to the file
+        await _writeUsersToFile(users);
+      } else {
+        print("User not found: $id");
+        throw Exception('User not found');
+      }
+    } catch (e) {
+      print("Error during deleting user: $e");
+      rethrow;
+    }
   }
 }
