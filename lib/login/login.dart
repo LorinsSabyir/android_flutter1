@@ -12,7 +12,7 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  final _userController = UserController(); // Reference to UserCont
+  final _userController = UserController();
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -22,12 +22,12 @@ class _LoginState extends State<Login> {
     if (_formKey.currentState?.validate() == true) {
       try {
         print('Attempting login...');
-        bool isAuthenticated = await _userController.loginUser(
+        final user = await _userController.loginUser(
           _usernameController.text.trim(),
           _passwordController.text.trim(),
         );
 
-        if (isAuthenticated) {
+        if (user != null) {
           // Loading screen
           showDialog(
             context: context,
@@ -38,16 +38,18 @@ class _LoginState extends State<Login> {
             },
           );
 
-          print('Login successful!');
+          print('Login successful for user: ${user.userName}');
 
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Login successful!')),
           );
 
-          // Replace with your actual home navigation logic
+          // Navigate to the HomePage with the current user's data
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => const HomePage()), // Replace with home page
+            MaterialPageRoute(
+              builder: (context) => HomePage(currentUser: user), // Pass user object
+            ),
           );
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -130,7 +132,6 @@ class _LoginState extends State<Login> {
                     onPressed: loginUser, // Call the login function
                     child: Container(
                       padding: EdgeInsets.all(25),
-                      // margin: EdgeInsets.symmetric(horizontal: 25),
                       decoration: BoxDecoration(
                         color: Colors.black,
                         borderRadius: BorderRadius.circular(10),
