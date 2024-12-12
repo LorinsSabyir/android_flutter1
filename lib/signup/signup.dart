@@ -44,6 +44,7 @@ class Signup extends StatelessWidget {
                   const Text(
                     'CREATE YOUR ACCOUNT!',
                     style: TextStyle(
+                  
                       fontSize: 25, 
                       fontWeight: FontWeight.bold),
                   ),
@@ -57,7 +58,7 @@ class Signup extends StatelessWidget {
                           controller: _firstNameController,
                           hintText: 'Firstname',
                           obscureText: false,
-                          icon: Icons.lock,
+                          icon: Icons.account_circle,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please input your Firstname';
@@ -71,7 +72,7 @@ class Signup extends StatelessWidget {
                           controller: _lastNameController,
                           hintText: 'Lastname',
                           obscureText: false,
-                          icon: Icons.lock,
+                          icon: Icons.account_circle,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please input your Lastname';
@@ -89,7 +90,7 @@ class Signup extends StatelessWidget {
                     controller: _usernameController,
                     hintText: 'Username',
                     obscureText: false,
-                    icon: Icons.lock,
+                    icon: Icons.person,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please input your Username';
@@ -104,7 +105,7 @@ class Signup extends StatelessWidget {
                     controller: _passwordController,
                     hintText: 'Password',
                     obscureText: true,
-                    icon: Icons.lock,
+                      icon: Icons.vpn_key,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please input your Password';
@@ -195,10 +196,9 @@ class Signup extends StatelessWidget {
                       ],
                       begin: Alignment.topLeft, // Starting point of the gradient
                       end: Alignment.bottomRight, // Ending point of the gradient
-                    ),      // Custom background color
-                       
+                    ),      // Custom background color                     
                         borderRadius: BorderRadius.circular(10),
-                           boxShadow: [
+                          boxShadow: [
                             BoxShadow(
                               color: Color(0xFF0C8DAC),
                               offset: const Offset(3.0, 3.0),

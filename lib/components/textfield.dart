@@ -24,8 +24,8 @@ class Textfield extends StatelessWidget {
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.shade500,
-              offset: const Offset(4.0, 4.0),
+              color: Colors.grey.shade400,
+              offset: const Offset(3.0, 3.0),
               blurRadius: 15.0,
               spreadRadius: 1.0,
             ),
