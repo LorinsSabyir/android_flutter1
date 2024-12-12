@@ -85,20 +85,17 @@ class _LoginState extends State<Login> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(height: 50),
-
+          
                   // Logo
-                  const Icon(
-                    Icons.lock,
-                    size: 100,
-                  ),
-                  const SizedBox(height: 50),
-
+                    Image.asset('assets/l.png',
+                  width: 200,
+                  height: 200,),               
                   const Text(
                     'Hello! Welcome Back',
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 30,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                   const SizedBox(height: 40),
@@ -108,7 +105,7 @@ class _LoginState extends State<Login> {
                     controller: _usernameController,
                     hintText: 'Username',
                     obscureText: false,
-                    icon: Icons.lock,
+                    icon: Icons.person,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please input your Username';
@@ -160,10 +157,10 @@ class _LoginState extends State<Login> {
                   borderRadius: BorderRadius.circular(10), // Same border radius
                   boxShadow: [
                     BoxShadow(
-                      color: Color(0xFF0C8DAC),
-                      offset: const Offset(4.2, 4.2),
-                      blurRadius: 15.0,
-                      spreadRadius: 2.0,
+                      color: Colors.black,
+                      offset: const Offset(3.0, 3.0),
+                      blurRadius: 10.0,
+                      spreadRadius: 1.0,
                     ),
                   ],
                 ),
