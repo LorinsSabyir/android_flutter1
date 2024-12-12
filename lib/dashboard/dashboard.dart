@@ -70,7 +70,7 @@ class _DashboardState extends State<Dashboard> {
               // Profile section
               CircleAvatar(
                 radius: 50,
-                backgroundImage: AssetImage('assets/placeholder.png')
+                backgroundImage: AssetImage('assets/Aqua Blue - PFP.jpg')
                     as ImageProvider, // Dummy user photo
                 onBackgroundImageError: (_, __) =>
                     print('Error loading profile picture'),
@@ -218,7 +218,48 @@ class _DashboardState extends State<Dashboard> {
                           );
                         }
                       },
-                      child: const Text('Update'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            Colors.transparent, // Use transparent background
+                        padding: EdgeInsets.zero, // Remove default padding
+                        shadowColor:
+                            Colors.transparent, // Remove default shadow
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(
+                              10), // Match the border radius
+                        ),
+                      ),
+                      child: Container(
+                        padding: EdgeInsets.symmetric(vertical: 25.0, horizontal: 10.0),
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              Color(0xFF08B1D8), // Light Blue
+                              Color(0xFF0C8DAC), // Teal
+                            ],
+                            begin: Alignment
+                                .topLeft, // Starting point of the gradient
+                            end: Alignment
+                                .bottomRight, // Ending point of the gradient
+                          ),
+                          borderRadius:
+                              BorderRadius.circular(10), // Same border radius
+                          border: Border.all(
+                            color: Colors.black, // Border color
+                            width: 2.0, // Border width
+                          ),
+                        ),
+                        child: Center(
+                          child: Text(
+                            'Update',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
                   ),
 
@@ -284,9 +325,47 @@ class _DashboardState extends State<Dashboard> {
                         }
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.red,
+                        backgroundColor:
+                            Colors.transparent, // Use transparent background
+                        padding: EdgeInsets.zero, // Remove default padding
+                        shadowColor:
+                            Colors.transparent, // Remove default shadow
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(
+                              10), // Match the border radius
+                        ),
                       ),
-                      child: const Text('Delete'),
+                      child: Container(
+                        padding: EdgeInsets.symmetric(vertical: 25.0, horizontal: 10.0),
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              Color.fromARGB(255, 255, 0, 0), // Light Blue
+                              Color.fromARGB(255, 228, 56, 56), // Teal
+                            ],
+                            begin: Alignment
+                                .topLeft, // Starting point of the gradient
+                            end: Alignment
+                                .bottomRight, // Ending point of the gradient
+                          ),
+                          borderRadius:
+                              BorderRadius.circular(10), // Same border radius
+                          border: Border.all(
+                            color: Colors.black, // Border color
+                            width: 2.0, // Border width
+                          ),
+                        ),
+                        child: Center(
+                          child: Text(
+                            'Delete',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ],
