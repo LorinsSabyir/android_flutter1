@@ -4,27 +4,50 @@ import 'package:flutter/material.dart';
 import 'package:android_nga_flutter/components/textfield.dart';
 import 'package:android_nga_flutter/entity/userModel.dart';
 
-class Dashboard extends StatelessWidget {
+class Dashboard extends StatefulWidget {
   final User currentUser;
 
   // Initialize controllers with user data
   Dashboard({required this.currentUser, Key? key}) : super(key: key);
 
-  final firstNameController = TextEditingController();
-  final lastNameController = TextEditingController();
-  final userNameController = TextEditingController();
-  final passWordController = TextEditingController();
-  final confirmPassController = TextEditingController();
+  @override
+  State<Dashboard> createState() => _DashboardState();
+}
+
+class _DashboardState extends State<Dashboard> {
+  late TextEditingController firstNameController;
+  late TextEditingController lastNameController;
+  late TextEditingController userNameController;
+  late TextEditingController passWordController;
+  late TextEditingController confirmPassController;
+
+  @override
+  void initState() {
+    super.initState();
+    firstNameController =
+        TextEditingController(text: widget.currentUser.firstName ?? '');
+    lastNameController =
+        TextEditingController(text: widget.currentUser.lastName ?? '');
+    userNameController =
+        TextEditingController(text: widget.currentUser.userName ?? '');
+    passWordController =
+        TextEditingController(text: widget.currentUser.passWord ?? '');
+    confirmPassController =
+        TextEditingController(text: widget.currentUser.passWord ?? '');
+  }
+
+  @override
+  void dispose() {
+    firstNameController.dispose();
+    lastNameController.dispose();
+    userNameController.dispose();
+    passWordController.dispose();
+    confirmPassController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    // Populate controllers with the user's current data
-    firstNameController.text = currentUser.firstName ?? '';
-    lastNameController.text = currentUser.lastName ?? '';
-    userNameController.text = currentUser.userName ?? '';
-    passWordController.text = currentUser.passWord ?? '';
-    confirmPassController.text = currentUser.passWord ?? '';
-
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -54,7 +77,7 @@ class Dashboard extends StatelessWidget {
               ),
               SizedBox(height: 16),
               Text(
-                '${currentUser.firstName ?? 'First Name'} ${currentUser.lastName ?? 'Last Name'}',
+                '${widget.currentUser.firstName ?? 'First Name'} ${widget.currentUser.lastName ?? 'Last Name'}',
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -62,7 +85,7 @@ class Dashboard extends StatelessWidget {
                 ),
               ),
               Text(
-                '${currentUser.userName ?? 'Username'}',
+                '${widget.currentUser.userName ?? 'Username'}',
                 style: TextStyle(
                   fontSize: 16,
                   color: Colors.black.withOpacity(0.7),
@@ -154,18 +177,51 @@ class Dashboard extends StatelessWidget {
                   // Update Button
                   Expanded(
                     child: ElevatedButton(
-                      onPressed: () {
-                        print('User data updated for: ${currentUser.userName}');
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('Information updated successfully!'),
-                            backgroundColor: Colors.green,
-                          ),
-                        );
+                      onPressed: () async {
+                        try {
+                          final userController = UserController();
+
+                          // Update user data
+                          await userController.updateUser(
+                            widget.currentUser.id,
+                            firstNameController.text.trim(),
+                            lastNameController.text.trim(),
+                            userNameController.text.trim(),
+                            passWordController.text.trim(),
+                          );
+
+                          // Update the local `currentUser` object
+                          widget.currentUser.firstName =
+                              firstNameController.text.trim();
+                          widget.currentUser.lastName =
+                              lastNameController.text.trim();
+                          widget.currentUser.userName =
+                              userNameController.text.trim(); // Update username
+                          widget.currentUser.passWord =
+                              passWordController.text.trim();
+
+                          // Show success message
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content:
+                                  Text('Information updated successfully!'),
+                              backgroundColor: Colors.green,
+                            ),
+                          );
+                        } catch (e) {
+                          // Show error message
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Failed to update user: $e'),
+                              backgroundColor: Colors.red,
+                            ),
+                          );
+                        }
                       },
-                      child: Text('Update'),
+                      child: const Text('Update'),
                     ),
                   ),
+
                   const SizedBox(width: 10),
 
                   // Delete user Button
@@ -182,13 +238,13 @@ class Dashboard extends StatelessWidget {
                                   'Are you sure you want to delete your account? This action cannot be undone.'),
                               actions: [
                                 TextButton(
-                                  onPressed: () => Navigator.pop(
-                                      context, false), // Cancel deletion
+                                  onPressed: () =>
+                                      Navigator.pop(context, false), // Cancel
                                   child: const Text('Cancel'),
                                 ),
                                 TextButton(
-                                  onPressed: () => Navigator.pop(
-                                      context, true), // Confirm deletion
+                                  onPressed: () =>
+                                      Navigator.pop(context, true), // Confirm
                                   child: const Text('Delete'),
                                 ),
                               ],
@@ -196,12 +252,12 @@ class Dashboard extends StatelessWidget {
                           },
                         );
 
-                        // Proceed with deletion if confirmed
+                        // Proceed if confirmed
                         if (confirm == true) {
                           try {
                             final userController = UserController();
                             await userController
-                                .deleteUser(currentUser); // Delete user logic
+                                .deleteUser(widget.currentUser); // Delete user
 
                             // Show success message
                             ScaffoldMessenger.of(context).showSnackBar(

@@ -123,55 +123,64 @@ class UserController {
 
   // Update user
   Future<void> updateUser(
-      String id, String firstName, String lastName, String passWord) async {
-    print("Attempting to update user with ID: $id");
+    String id,
+    String firstName,
+    String lastName,
+    String userName,
+    String passWord,
+  ) async {
+    final users = await _readUsersFromFile();
+
+    // Locate the user by ID
+    final index = users.indexWhere((user) => user.id == id);
+    if (index == -1) {
+      throw Exception('User not found');
+    }
+
+    // Ensure the username is unique for all users except the one being updated
+    final duplicateUser =
+        users.any((user) => user.userName == userName && user.id != id);
+    if (duplicateUser) {
+      throw Exception('Username already exists');
+    }
+
+    // Update user details
+    users[index] = User(
+      id: id,
+      firstName: firstName,
+      lastName: lastName,
+      userName: userName,
+      passWord: passWord,
+    );
+
+    // Save updated users to the file
+    await _writeUsersToFile(users);
+  }
+
+  // Delete user
+  Future<void> deleteUser(User userToDelete) async {
+    print("Attempting to delete user with ID: ${userToDelete.id}");
     try {
+      // Read all users from the JSON file
       final users = await _readUsersFromFile();
 
-      // Find the user and update their data
-      final index = users.indexWhere((user) => user.id == id);
-      if (index != -1) {
-        users[index] = User(
-          id: id, // ID remains the same
-          firstName: firstName,
-          lastName: lastName,
-          userName: users[index].userName, // Retain existing username
-          passWord: passWord,
-        );
+      // Check initial length for comparison
+      final initialLength = users.length;
 
-        // Write the updated user list to the file
+      // Remove the user matching the ID
+      users.removeWhere((user) => user.id == userToDelete.id);
+
+      if (users.length < initialLength) {
+        // Write updated user list back to the file
         await _writeUsersToFile(users);
-        print("User updated successfully: $id");
+        print("User deleted successfully: ${userToDelete.id}");
       } else {
-        print("User not found: $id");
+        print("User not found: ${userToDelete.id}");
         throw Exception('User not found');
       }
     } catch (e) {
-      print("Error during updating user: $e");
-      rethrow;
-    }
-  }
-  // Deletes the specified user from the JSON file
-  Future<void> deleteUser(User userToDelete) async {
-    try {
-      final directory = await getApplicationDocumentsDirectory();
-      final file = File('${directory.path}/users.json');
-
-      if (await file.exists()) {
-        final content = await file.readAsString();
-        final List<dynamic> users = jsonDecode(content);
-
-        // Remove the user from the list
-        users.removeWhere((user) => user['id'] == userToDelete.id);
-
-        // Write the updated list back to the file
-        await file.writeAsString(jsonEncode(users));
-      } else {
-        throw Exception('User data file not found');
-      }
-    } catch (e) {
+      print("Error deleting user: $e");
       throw Exception('Failed to delete user: $e');
     }
   }
-
 }
