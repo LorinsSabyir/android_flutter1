@@ -7,7 +7,7 @@ import 'package:android_nga_flutter/components/my_list_tile.dart';
 class MyDrawer extends StatelessWidget {
   final User currentUser; // Add currentUser parameter
 
-  const MyDrawer({Key? key, required this.currentUser}) : super(key: key);
+  const MyDrawer({super.key, required this.currentUser});
 
   @override
   Widget build(BuildContext context) {

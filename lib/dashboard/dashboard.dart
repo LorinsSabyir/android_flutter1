@@ -8,7 +8,7 @@ class Dashboard extends StatefulWidget {
   final User currentUser;
 
   // Initialize controllers with user data
-  Dashboard({required this.currentUser, Key? key}) : super(key: key);
+  Dashboard({required this.currentUser, super.key});
 
   @override
   State<Dashboard> createState() => _DashboardState();
@@ -85,7 +85,7 @@ class _DashboardState extends State<Dashboard> {
                 ),
               ),
               Text(
-                '${widget.currentUser.userName ?? 'Username'}',
+                widget.currentUser.userName ?? 'Username',
                 style: TextStyle(
                   fontSize: 16,
                   color: Colors.black.withOpacity(0.7),
