@@ -128,7 +128,7 @@ class _VigenereState extends State<Vigenere> {
                 controller: messageController,
                 hintText: 'Enter Message Here',
                 obscureText: false,
-                maxLines: 5,
+                maxLines: 3,
               ),
               SizedBox(height: 25),
               MyTextField(

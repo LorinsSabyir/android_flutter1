@@ -1,7 +1,15 @@
 import 'package:android_nga_flutter/home/home_page.dart';
 import 'package:android_nga_flutter/login/login.dart';
+<<<<<<< HEAD
 import 'package:flutter/material.dart';
+=======
+//import 'package:android_nga_flutter/ciphers/atbash.dart';
+import 'package:flutter/material.dart';
+//import 'package:android_nga_flutter/ciphers/caesar.dart';
+//import 'package:android_nga_flutter/dashboard/dashboard.dart';
+>>>>>>> 334f927786633d089e709cd69f3db6cdfa968d0f
 import 'package:android_nga_flutter/ciphers/vigenere.dart';
+import 'package:android_nga_flutter/testt/dashboard.dart';
 
 //import 'package:android_nga_flutter/ciphers/atbash.dart';
 
