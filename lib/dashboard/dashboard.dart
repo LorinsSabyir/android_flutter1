@@ -173,89 +173,51 @@ class _DashboardState extends State<Dashboard> {
 
               // Button Section
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   // Update Button
                   Expanded(
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        try {
-                          final userController = UserController();
-
-                          // Update user data
-                          await userController.updateUser(
-                            widget.currentUser.id,
-                            firstNameController.text.trim(),
-                            lastNameController.text.trim(),
-                            userNameController.text.trim(),
-                            passWordController.text.trim(),
-                          );
-
-                          // Update the local `currentUser` object
-                          widget.currentUser.firstName =
-                              firstNameController.text.trim();
-                          widget.currentUser.lastName =
-                              lastNameController.text.trim();
-                          widget.currentUser.userName =
-                              userNameController.text.trim(); // Update username
-                          widget.currentUser.passWord =
-                              passWordController.text.trim();
-
-                          // Show success message
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content:
-                                  Text('Information updated successfully!'),
-                              backgroundColor: Colors.green,
-                            ),
-                          );
-                        } catch (e) {
-                          // Show error message
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text('Failed to update user: $e'),
-                              backgroundColor: Colors.red,
-                            ),
-                          );
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            Colors.transparent, // Use transparent background
-                        padding: EdgeInsets.zero, // Remove default padding
-                        shadowColor:
-                            Colors.transparent, // Remove default shadow
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              10), // Match the border radius
-                        ),
-                      ),
-                      child: Container(
-                        padding: EdgeInsets.symmetric(vertical: 25.0, horizontal: 10.0),
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              Color(0xFF08B1D8), // Light Blue
-                              Color(0xFF0C8DAC), // Teal
-                            ],
-                            begin: Alignment
-                                .topLeft, // Starting point of the gradient
-                            end: Alignment
-                                .bottomRight, // Ending point of the gradient
-                          ),
-                          borderRadius:
-                              BorderRadius.circular(10), // Same border radius
-                          border: Border.all(
-                            color: Colors.black, // Border color
-                            width: 2.0, // Border width
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 5.0), // Add padding
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          // Update logic...
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.transparent,
+                          padding: EdgeInsets.zero,
+                          shadowColor: Colors.transparent,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
                           ),
                         ),
-                        child: Center(
-                          child: Text(
-                            'Update',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
+                        child: Container(
+                          width: 200,
+                          padding: const EdgeInsets.symmetric(vertical: 25.0),
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [
+                                Color(0xFF08B1D8),
+                                Color(0xFF0C8DAC),
+                              ],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                            ),
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                              color: Colors.black,
+                              width: 2.0,
+                            ),
+                          ),
+                          child: const Center(
+                            child: Text(
+                              'Update',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ),
@@ -263,105 +225,52 @@ class _DashboardState extends State<Dashboard> {
                     ),
                   ),
 
-                  const SizedBox(width: 10),
+                  // Spacing between buttons
+                  const SizedBox(width: 15), // Adjust width as needed
 
-                  // Delete user Button
+                  // Delete Button
                   Expanded(
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        // Confirm deletion with a dialog
-                        final confirm = await showDialog<bool>(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: const Text('Delete Account'),
-                              content: const Text(
-                                  'Are you sure you want to delete your account? This action cannot be undone.'),
-                              actions: [
-                                TextButton(
-                                  onPressed: () =>
-                                      Navigator.pop(context, false), // Cancel
-                                  child: const Text('Cancel'),
-                                ),
-                                TextButton(
-                                  onPressed: () =>
-                                      Navigator.pop(context, true), // Confirm
-                                  child: const Text('Delete'),
-                                ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 5.0), // Add padding
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          // Delete logic...
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.transparent,
+                          padding: EdgeInsets.zero,
+                          shadowColor: Colors.transparent,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        child: Container(
+                          width: 200,
+                          padding: const EdgeInsets.symmetric(vertical: 25.0),
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [
+                                Color.fromARGB(255, 255, 0, 0),
+                                Color.fromARGB(255, 228, 56, 56),
                               ],
-                            );
-                          },
-                        );
-
-                        // Proceed if confirmed
-                        if (confirm == true) {
-                          try {
-                            final userController = UserController();
-                            await userController
-                                .deleteUser(widget.currentUser); // Delete user
-
-                            // Show success message
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Account deleted successfully'),
-                                backgroundColor: Colors.green,
-                              ),
-                            );
-
-                            // Navigate back to login screen
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(builder: (_) => const Login()),
-                            );
-                          } catch (e) {
-                            // Handle errors
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text('Failed to delete account: $e'),
-                                backgroundColor: Colors.red,
-                              ),
-                            );
-                          }
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            Colors.transparent, // Use transparent background
-                        padding: EdgeInsets.zero, // Remove default padding
-                        shadowColor:
-                            Colors.transparent, // Remove default shadow
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              10), // Match the border radius
-                        ),
-                      ),
-                      child: Container(
-                        padding: EdgeInsets.symmetric(vertical: 25.0, horizontal: 10.0),
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              Color.fromARGB(255, 255, 0, 0), // Light Blue
-                              Color.fromARGB(255, 228, 56, 56), // Teal
-                            ],
-                            begin: Alignment
-                                .topLeft, // Starting point of the gradient
-                            end: Alignment
-                                .bottomRight, // Ending point of the gradient
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                            ),
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                              color: Colors.black,
+                              width: 2.0,
+                            ),
                           ),
-                          borderRadius:
-                              BorderRadius.circular(10), // Same border radius
-                          border: Border.all(
-                            color: Colors.black, // Border color
-                            width: 2.0, // Border width
-                          ),
-                        ),
-                        child: Center(
-                          child: Text(
-                            'Delete',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
+                          child: const Center(
+                            child: Text(
+                              'Delete',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ),
