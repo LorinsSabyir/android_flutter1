@@ -1,12 +1,50 @@
+import 'package:android_nga_flutter/entity/userCont.dart';
+import 'package:android_nga_flutter/login/login.dart';
 import 'package:flutter/material.dart';
 import 'package:android_nga_flutter/components/textfield.dart';
+import 'package:android_nga_flutter/entity/userModel.dart';
 
-class Dashboard extends StatelessWidget {
-  final firstNameController = TextEditingController();
-  final lastNameController = TextEditingController();
-  final userNameController = TextEditingController();
-  final passWordController = TextEditingController();
-  final confirmPassController = TextEditingController();
+class Dashboard extends StatefulWidget {
+  final User currentUser;
+
+  // Initialize controllers with user data
+  Dashboard({required this.currentUser, Key? key}) : super(key: key);
+
+  @override
+  State<Dashboard> createState() => _DashboardState();
+}
+
+class _DashboardState extends State<Dashboard> {
+  late TextEditingController firstNameController;
+  late TextEditingController lastNameController;
+  late TextEditingController userNameController;
+  late TextEditingController passWordController;
+  late TextEditingController confirmPassController;
+
+  @override
+  void initState() {
+    super.initState();
+    firstNameController =
+        TextEditingController(text: widget.currentUser.firstName ?? '');
+    lastNameController =
+        TextEditingController(text: widget.currentUser.lastName ?? '');
+    userNameController =
+        TextEditingController(text: widget.currentUser.userName ?? '');
+    passWordController =
+        TextEditingController(text: widget.currentUser.passWord ?? '');
+    confirmPassController =
+        TextEditingController(text: widget.currentUser.passWord ?? '');
+  }
+
+  @override
+  void dispose() {
+    firstNameController.dispose();
+    lastNameController.dispose();
+    userNameController.dispose();
+    passWordController.dispose();
+    confirmPassController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,12 +71,13 @@ class Dashboard extends StatelessWidget {
               CircleAvatar(
                 radius: 50,
                 backgroundImage: AssetImage('assets/placeholder.png')
-                    as ImageProvider, //TODO add a dummy user photo
-                onBackgroundImageError: (_, __) => print('Image load error'),
+                    as ImageProvider, // Dummy user photo
+                onBackgroundImageError: (_, __) =>
+                    print('Error loading profile picture'),
               ),
               SizedBox(height: 16),
               Text(
-                'Lorenz',
+                '${widget.currentUser.firstName ?? 'First Name'} ${widget.currentUser.lastName ?? 'Last Name'}',
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -46,28 +85,24 @@ class Dashboard extends StatelessWidget {
                 ),
               ),
               Text(
-                'lorenz.gomelan@gmail.com',
+                '${widget.currentUser.userName ?? 'Username'}',
                 style: TextStyle(
                   fontSize: 16,
                   color: Colors.black.withOpacity(0.7),
                 ),
               ),
               SizedBox(height: 25),
-
               Divider(),
 
               // Text fields for user information
-              // Firstname textfield
               Row(
                 children: [
                   Expanded(
-                    child:
-                        // Firstname textfield
-                        Textfield(
+                    child: Textfield(
                       controller: firstNameController,
                       hintText: 'Firstname',
                       obscureText: false,
-                      icon: Icons.lock,
+                      icon: Icons.person,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Please input your Firstname';
@@ -77,13 +112,11 @@ class Dashboard extends StatelessWidget {
                     ),
                   ),
                   Expanded(
-                    child:
-                        // Lastname textfield
-                        Textfield(
+                    child: Textfield(
                       controller: lastNameController,
                       hintText: 'Lastname',
                       obscureText: false,
-                      icon: Icons.lock,
+                      icon: Icons.person,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Please input your Lastname';
@@ -91,12 +124,10 @@ class Dashboard extends StatelessWidget {
                         return null;
                       },
                     ),
-                  )
+                  ),
                 ],
               ),
               const SizedBox(height: 20),
-
-              // Username textfield
               Textfield(
                 controller: userNameController,
                 hintText: 'Username',
@@ -110,22 +141,19 @@ class Dashboard extends StatelessWidget {
                 },
               ),
               const SizedBox(height: 20),
-
-              // Password textfield
               Textfield(
                 controller: passWordController,
                 hintText: 'Password',
-                obscureText: false,
+                obscureText: true,
                 icon: Icons.lock,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please input your Username';
+                    return 'Please input your Password';
                   }
                   return null;
                 },
               ),
               const SizedBox(height: 20),
-
               Textfield(
                 controller: confirmPassController,
                 hintText: 'Confirm Password',
@@ -143,83 +171,122 @@ class Dashboard extends StatelessWidget {
               ),
               const SizedBox(height: 30),
 
-              // Button
+              // Button Section
               Row(
                 children: [
-                  
-                  //Update Button
+                  // Update Button
                   Expanded(
-                    child: 
-                        ElevatedButton(
-                      onPressed: () {
-                        if (true) {
-                          print('Information saved successfully!');
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        try {
+                          final userController = UserController();
+
+                          // Update user data
+                          await userController.updateUser(
+                            widget.currentUser.id,
+                            firstNameController.text.trim(),
+                            lastNameController.text.trim(),
+                            userNameController.text.trim(),
+                            passWordController.text.trim(),
+                          );
+
+                          // Update the local `currentUser` object
+                          widget.currentUser.firstName =
+                              firstNameController.text.trim();
+                          widget.currentUser.lastName =
+                              lastNameController.text.trim();
+                          widget.currentUser.userName =
+                              userNameController.text.trim(); // Update username
+                          widget.currentUser.passWord =
+                              passWordController.text.trim();
+
+                          // Show success message
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content:
+                                  Text('Information updated successfully!'),
+                              backgroundColor: Colors.green,
+                            ),
+                          );
+                        } catch (e) {
+                          // Show error message
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
-                              content:
-                                  Text('All information saved successfully!'),
-                              backgroundColor:
-                                  Colors.green, // Success Snackbar color
+                              content: Text('Failed to update user: $e'),
+                              backgroundColor: Colors.red,
                             ),
                           );
                         }
                       },
-                      child: Container(
-                        padding: const EdgeInsets.all(25),
-                        // margin: EdgeInsets.symmetric(horizontal: 25),
-                        decoration: BoxDecoration(
-                          color: Colors.black,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: const Center(
-                          child: Text(
-                            'Update',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
+                      child: const Text('Update'),
                     ),
                   ),
 
-                  // Delete button
+                  const SizedBox(width: 10),
+
+                  // Delete user Button
                   Expanded(
-                    child: 
-                        ElevatedButton(
-                      onPressed: () {
-                        if (true) {
-                          print('Information saved successfully!');
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content:
-                                  Text('All information saved successfully!'),
-                              backgroundColor:
-                                  Colors.green, // Success Snackbar color
-                            ),
-                          );
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        // Confirm deletion with a dialog
+                        final confirm = await showDialog<bool>(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text('Delete Account'),
+                              content: const Text(
+                                  'Are you sure you want to delete your account? This action cannot be undone.'),
+                              actions: [
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(context, false), // Cancel
+                                  child: const Text('Cancel'),
+                                ),
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(context, true), // Confirm
+                                  child: const Text('Delete'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+
+                        // Proceed if confirmed
+                        if (confirm == true) {
+                          try {
+                            final userController = UserController();
+                            await userController
+                                .deleteUser(widget.currentUser); // Delete user
+
+                            // Show success message
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Account deleted successfully'),
+                                backgroundColor: Colors.green,
+                              ),
+                            );
+
+                            // Navigate back to login screen
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(builder: (_) => const Login()),
+                            );
+                          } catch (e) {
+                            // Handle errors
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Failed to delete account: $e'),
+                                backgroundColor: Colors.red,
+                              ),
+                            );
+                          }
                         }
                       },
-                      child: Container(
-                        padding: const EdgeInsets.all(25),
-                        // margin: EdgeInsets.symmetric(horizontal: 25),
-                        decoration: BoxDecoration(
-                          color: const Color.fromARGB(255, 255, 0, 0),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: const Center(
-                          child: Text(
-                            'Exit',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red,
                       ),
+                      child: const Text('Delete'),
                     ),
                   ),
                 ],
