@@ -41,7 +41,7 @@ class Signup extends StatelessWidget {
                   width: 200,
                   height: 200,),
                   const Text(
-                    'CREATE YOUR ACCOUNT!',
+                    'CREATE YOUR ACCOUNT',
                     style: TextStyle(                
                       fontSize: 25, 
                       fontWeight: FontWeight.bold),
