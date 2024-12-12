@@ -22,14 +22,7 @@ class Textfield extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 25.0),
       child: Container(
         decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.shade400,
-              offset: const Offset(3.0, 3.0),
-              blurRadius: 15.0,
-              spreadRadius: 1.0,
-            ),
-          ],
+          
         ),
         child: TextFormField(
           controller: controller,
