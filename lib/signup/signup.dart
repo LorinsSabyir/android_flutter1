@@ -22,22 +22,31 @@ class Signup extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[300],
-      body: SafeArea(
+      body:Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/darkteal.jpg'),
+              fit: BoxFit.cover,
+            )          
+          ),
+      child: SafeArea(
         child: Center(
           child: SingleChildScrollView(
             child: Form(
               key: _formKey,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const SizedBox(height: 50),
-                  const Icon(Icons.lock, size: 100),
-                  const SizedBox(height: 20),
+                children: [            
+                  Image.asset('assets/l.png',
+                  width: 200,
+                  height: 200,),
                   const Text(
-                    'CREATE YOUR ACCOUNT!',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    'CREATE YOUR ACCOUNT',
+                    style: TextStyle(                
+                      fontSize: 25, 
+                      fontWeight: FontWeight.bold),
                   ),
-                  const SizedBox(height: 50),
+                  const SizedBox(height: 30),
 
                   // Full name fields
                   Row(
@@ -47,7 +56,7 @@ class Signup extends StatelessWidget {
                           controller: _firstNameController,
                           hintText: 'Firstname',
                           obscureText: false,
-                          icon: Icons.lock,
+                          icon: Icons.account_circle,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please input your Firstname';
@@ -56,13 +65,12 @@ class Signup extends StatelessWidget {
                           },
                         ),
                       ),
-                      const SizedBox(width: 10),
                       Expanded(
                         child: Textfield(
                           controller: _lastNameController,
                           hintText: 'Lastname',
                           obscureText: false,
-                          icon: Icons.lock,
+                          icon: Icons.account_circle,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please input your Lastname';
@@ -80,7 +88,7 @@ class Signup extends StatelessWidget {
                     controller: _usernameController,
                     hintText: 'Username',
                     obscureText: false,
-                    icon: Icons.lock,
+                    icon: Icons.person,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please input your Username';
@@ -95,7 +103,7 @@ class Signup extends StatelessWidget {
                     controller: _passwordController,
                     hintText: 'Password',
                     obscureText: true,
-                    icon: Icons.lock,
+                      icon: Icons.vpn_key,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please input your Password';
@@ -125,7 +133,10 @@ class Signup extends StatelessWidget {
                   const SizedBox(height: 30),
 
                   // Sign Up Button
-                  ElevatedButton(
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                 
+                  child: ElevatedButton(
                     onPressed: () async {
                       if (_formKey.currentState?.validate() == true) {
                         try {
@@ -166,12 +177,29 @@ class Signup extends StatelessWidget {
                         }
                       }
                     },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.transparent, // Use custom background
+                      padding: EdgeInsets.zero,            // Remove default padding
+                      shadowColor: Colors.transparent,     // Remove shadow
+                    ),
+                    
                     child: Container(
                       padding: const EdgeInsets.all(25),
                       // margin: EdgeInsets.symmetric(horizontal: 25),
                       decoration: BoxDecoration(
-                        color: Colors.black,
+                          gradient: LinearGradient(
+                      colors: [
+                        Color(0xFF08B1D8), // Light Blue
+                        Color(0xFF0C8DAC), // Teal
+                      ],
+                      begin: Alignment.topLeft, // Starting point of the gradient
+                      end: Alignment.bottomRight, // Ending point of the gradient
+                    ),      // Custom background color                     
                         borderRadius: BorderRadius.circular(10),
+                           border: Border.all(
+    color: Colors.black,  // Border color
+    width: 2.0,           // Border width
+  ),
                       ),
                       child: const Center(
                         child: Text(
@@ -185,6 +213,7 @@ class Signup extends StatelessWidget {
                       ),
                     ),
                   ),
+                   ),
                   const SizedBox(height: 20),
 
                   // Login redirect
@@ -203,8 +232,9 @@ class Signup extends StatelessWidget {
                         child: const Text(
                           "Log In",
                           style: TextStyle(
-                            color: Colors.blue,
+                            color: Colors.white,
                             fontWeight: FontWeight.bold,
+                            fontSize: 15,
                           ),
                         ),
                       ),
@@ -215,6 +245,7 @@ class Signup extends StatelessWidget {
             ),
           ),
         ),
+      ),
       ),
     );
   }
