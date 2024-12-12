@@ -1,3 +1,4 @@
+import 'package:android_nga_flutter/entity/userModel.dart';
 import 'package:android_nga_flutter/home/home_atbash.dart';
 import 'package:android_nga_flutter/home/home_ceasar.dart';
 import 'package:android_nga_flutter/home/home_vigenere.dart';
@@ -6,7 +7,9 @@ import 'package:flutter/material.dart';
 
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  final User currentUser;
+
+  const HomePage({Key? key, required this.currentUser}) : super(key: key);
 
   @override
 Widget build(BuildContext context) {
@@ -25,7 +28,13 @@ Widget build(BuildContext context) {
           fit: BoxFit.cover, // Ensures the image covers the entire background
         ),
       ),
+<<<<<<< HEAD
       child: ListView(
+=======
+      drawer: MyDrawer(currentUser: currentUser), // Pass currentUser to MyDrawer
+      backgroundColor: Theme.of(context).colorScheme.surface,
+      body: ListView(
+>>>>>>> 51121275734b344d9682ae464e4fa5974f6b80d4
         children: [
           const SizedBox(height: 25),
 
