@@ -38,11 +38,14 @@ class Signup extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const SizedBox(height: 50),
-                  const Icon(Icons.lock, size: 100),
-                  const SizedBox(height: 20),
+                  Image.asset('assets/logo2.png',
+                  width: 300,
+                  height: 150,),
                   const Text(
                     'CREATE YOUR ACCOUNT!',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      fontSize: 25, 
+                      fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 50),
 
@@ -63,7 +66,6 @@ class Signup extends StatelessWidget {
                           },
                         ),
                       ),
-                      const SizedBox(width: 10),
                       Expanded(
                         child: Textfield(
                           controller: _lastNameController,
@@ -132,7 +134,10 @@ class Signup extends StatelessWidget {
                   const SizedBox(height: 30),
 
                   // Sign Up Button
-                  ElevatedButton(
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                 
+                  child: ElevatedButton(
                     onPressed: () async {
                       if (_formKey.currentState?.validate() == true) {
                         try {
@@ -173,12 +178,34 @@ class Signup extends StatelessWidget {
                         }
                       }
                     },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.transparent, // Use custom background
+                      padding: EdgeInsets.zero,            // Remove default padding
+                      shadowColor: Colors.transparent,     // Remove shadow
+                    ),
+                    
                     child: Container(
                       padding: const EdgeInsets.all(25),
                       // margin: EdgeInsets.symmetric(horizontal: 25),
                       decoration: BoxDecoration(
-                        color: Colors.black,
+                          gradient: LinearGradient(
+                      colors: [
+                        Color(0xFF08B1D8), // Light Blue
+                        Color(0xFF0C8DAC), // Teal
+                      ],
+                      begin: Alignment.topLeft, // Starting point of the gradient
+                      end: Alignment.bottomRight, // Ending point of the gradient
+                    ),      // Custom background color
+                       
                         borderRadius: BorderRadius.circular(10),
+                           boxShadow: [
+                            BoxShadow(
+                              color: Color(0xFF0C8DAC),
+                              offset: const Offset(3.0, 3.0),
+                              blurRadius: 15.0,
+                              spreadRadius: 1.0,
+                            ),
+                          ],
                       ),
                       child: const Center(
                         child: Text(
@@ -192,6 +219,7 @@ class Signup extends StatelessWidget {
                       ),
                     ),
                   ),
+                   ),
                   const SizedBox(height: 20),
 
                   // Login redirect
@@ -210,8 +238,9 @@ class Signup extends StatelessWidget {
                         child: const Text(
                           "Log In",
                           style: TextStyle(
-                            color: Colors.blue,
+                            color: Colors.white,
                             fontWeight: FontWeight.bold,
+                            fontSize: 15,
                           ),
                         ),
                       ),
