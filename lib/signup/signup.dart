@@ -37,10 +37,10 @@ class Signup extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(height: 50),
-                  Image.asset('assets/logo2.png',
-                  width: 300,
-                  height: 150,),
+              
+                  Image.asset('assets/logoo.png',
+                  width: 200,
+                  height: 200,),
                   const Text(
                     'CREATE YOUR ACCOUNT!',
                     style: TextStyle(
@@ -200,9 +200,9 @@ class Signup extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10),
                           boxShadow: [
                             BoxShadow(
-                              color: Color(0xFF0C8DAC),
+                              color: Colors.black,
                               offset: const Offset(3.0, 3.0),
-                              blurRadius: 15.0,
+                              blurRadius: 10.0,
                               spreadRadius: 1.0,
                             ),
                           ],
