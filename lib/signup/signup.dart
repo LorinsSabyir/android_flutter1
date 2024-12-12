@@ -36,19 +36,17 @@ class Signup extends StatelessWidget {
               key: _formKey,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-              
-                  Image.asset('assets/logoo.png',
+                children: [            
+                  Image.asset('assets/l.png',
                   width: 200,
                   height: 200,),
                   const Text(
                     'CREATE YOUR ACCOUNT!',
-                    style: TextStyle(
-                  
+                    style: TextStyle(                
                       fontSize: 25, 
                       fontWeight: FontWeight.bold),
                   ),
-                  const SizedBox(height: 50),
+                  const SizedBox(height: 30),
 
                   // Full name fields
                   Row(

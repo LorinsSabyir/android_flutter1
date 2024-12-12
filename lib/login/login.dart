@@ -87,17 +87,15 @@ class _LoginState extends State<Login> {
                 children: [
           
                   // Logo
-                  const Icon(
-                    Icons.lock,
-                    size: 100,
-                  ),
-                  const SizedBox(height: 50),
-
+                    Image.asset('assets/l.png',
+                  width: 200,
+                  height: 200,),               
                   const Text(
                     'Hello! Welcome Back',
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 30,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                   const SizedBox(height: 40),

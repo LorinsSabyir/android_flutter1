@@ -52,18 +52,24 @@ class _AtbashState extends State<Atbash> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: Colors.black.withOpacity(0.1),
+        backgroundColor: Color(0xFF00646C),
       ),
-      backgroundColor: Colors.grey[300],
-      body: SafeArea(
+      body:Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/bg2.jpeg'),
+              fit: BoxFit.cover,
+            )          
+          ),
+      child: SafeArea(
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(
-                Icons.lock,
-                size: 100,
-              ),
+               SizedBox(height: 50),
+               Image.asset('assets/l.png',
+                  width: 200,
+                  height: 200,),
               SizedBox(height: 20),
               Text(
                 'This is Atbash Cipher',
@@ -78,6 +84,7 @@ class _AtbashState extends State<Atbash> {
                 controller: inputController,
                 hintText: 'Enter Message Here',
                 obscureText: false,
+                  maxLines: 3,
               ),
               SizedBox(height: 30),
               // Buttons for processing and clearing
@@ -87,12 +94,15 @@ class _AtbashState extends State<Atbash> {
                   Button(
                     onTap: processText, 
                     label: 'Translate',
-                    width: 180,),
+                    width: 180,
+                    color: Color(0xFF1B4A56),
+                    ),
+                    
                   SizedBox(width:10),
                   Button(
                   onTap: clearText, 
                   label: 'Clear',
-                  color: Color.fromARGB(255, 143, 20, 12),
+                  color: Color(0xFFAC4040),
                   width: 180,),
                 ],
               ),
@@ -103,6 +113,6 @@ class _AtbashState extends State<Atbash> {
           ),
         ),
       ),
-    );
+    ),);
   }
 }
