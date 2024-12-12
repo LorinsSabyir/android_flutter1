@@ -1,186 +1,117 @@
 import 'dart:convert';
-import 'dart:io';
-import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:android_nga_flutter/entity/userModel.dart';
 
-class UserController {
-  final String _folderName = "data";
-  final String _fileName = "users.json";
+class UserCont {
+  static const String _idCounterKey =
+      'userIdCounter'; // Key for storing the ID counter
+  static const String _usersKey = 'users';
 
-  // Create folder inside project directory
-  Future<Directory> _getLocalFolder() async {
-    final directory = Directory.current; // Get current working directory
-    final folderPath = '${directory.path}/$_folderName'; // Add folder name
-    final folder = Directory(folderPath);
+  // Save a new user
+  Future<void> registerUser(
+    String firstname,
+    String lastname,
+    String username,
+    String password,
+  ) async {
+    final prefs = await SharedPreferences.getInstance();
+    List<String> users = prefs.getStringList(_usersKey) ?? [];
+    int userIdCounter = prefs.getInt(_idCounterKey) ?? 0;
 
-    if (!await folder.exists()) {
-      print("Folder does not exist. Creating folder...");
-      await folder.create();
-    }
-    return folder;
-  }
+    print('User saved in $prefs'); // Debugging output
 
-  // Json directory inside project directory
-  Future<File> _getLocalFile() async {
-    final folder = await _getLocalFolder();
-    print("Userdata is saved into ${folder.path}");
-    return File('${folder.path}/$_fileName');
-  }
-
-  // Read users
-  Future<List<User>> _readUsersFromFile() async {
-    try {
-      final file = await _getLocalFile();
-      if (await file.exists()) {
-        final contents = await file.readAsString();
-        final List<dynamic> jsonData = json.decode(contents);
-        return jsonData.map((data) => User.fromJson(data)).toList();
-      } else {
-        print("File does not exist. Returning empty list.");
-        return [];
-      }
-    } catch (e) {
-      print("Error reading users: $e");
-      return [];
-    }
-  }
-
-  // Create new user
-  Future<void> _writeUsersToFile(List<User> users) async {
-    print("Writing users to file...");
-    try {
-      final file = await _getLocalFile();
-      final List<Map<String, dynamic>> jsonData =
-          users.map((user) => user.toJson()).toList();
-      await file.writeAsString(json.encode(jsonData));
-      print("Users written to file successfully.");
-    } catch (e) {
-      print("Error writing users to file: $e");
-    }
-  }
-
-  // Login user
-  Future<User?> loginUser(String username, String password) async {
-    print("Attempting to log in user...");
-    try {
-      final users = await _readUsersFromFile();
-      for (var user in users) {
-        if (user.userName == username && user.passWord == password) {
-          print("Login successful for user: $username");
-          return user; // Return the logged-in user
-        }
-      }
-      print("Login failed. Invalid username or password.");
-      return null; // Return null for invalid login
-    } catch (e) {
-      print("Error during login: $e");
-      return null; // Return null if an error occurs
-    }
-  }
-
-  // Register user
-  Future<void> registerUser(String firstName, String lastName, String userName,
-      String passWord) async {
-    print("Attempting to register user: $userName");
-    try {
-      final users = await _readUsersFromFile();
-
-      // Check if the username already exists
-      if (users.any((user) => user.userName == userName)) {
-        print("User already exists: $userName");
+    // Check if username already exists
+    for (String userJson in users) {
+      final userMap = jsonDecode(userJson);
+      if (userMap['username'] == username) {
         throw Exception('User already exists');
       }
-
-      // Generate an incremental ID for the new user
-      int newId = 1; // Start with ID 1
-      if (users.isNotEmpty) {
-        // Find the maximum existing ID and increment by 1
-        newId = users
-                .map((user) => int.tryParse(user.id) ?? 0)
-                .fold(0, (prev, element) => element > prev ? element : prev) +
-            1;
-      }
-
-      // Create the new user with the generated ID
-      final newUser = User(
-        id: newId.toString(), // Use the incremented ID
-        firstName: firstName,
-        lastName: lastName,
-        userName: userName,
-        passWord: passWord,
-      );
-
-      users.add(newUser);
-
-      // Write the updated user list to the file
-      await _writeUsersToFile(users);
-      print("User registered successfully: $userName");
-    } catch (e) {
-      print("Error during registration: $e");
-      rethrow;
     }
+
+    // Increment ID counter for new user
+    final newId = (++userIdCounter).toString();
+
+    // Add new user
+    final newUser = User(
+      id: newId,
+      firstName: firstname,
+      lastName: lastname,
+      userName: username,
+      passWord: password,
+    );
+    users.add(jsonEncode(newUser.toJson()));
+    await prefs.setStringList(_usersKey, users);
+    await prefs.setInt(_idCounterKey, userIdCounter);
+  }
+
+  // Read user
+  Future<bool> loginUser(String username, String password) async {
+    final prefs = await SharedPreferences.getInstance();
+    List<String> users = prefs.getStringList(_usersKey) ?? [];
+
+    for (String userJson in users) {
+      final userMap = jsonDecode(userJson);
+      if (userMap['username'] == username && userMap['password'] == password) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  // Fetch user
+  Future<User?> fetchCurrentUser() async {
+    final prefs = await SharedPreferences.getInstance();
+    String? currentUserId = prefs.getString('loggedInUserId');
+    if (currentUserId == null) return null;
+
+    List<String> users = prefs.getStringList('users') ?? [];
+    for (String userJson in users) {
+      final userMap = jsonDecode(userJson);
+      if (userMap['id'] == currentUserId) {
+        return User.fromJson(userMap);
+      }
+    }
+    return null;
   }
 
   // Update user
   Future<void> updateUser(
-    String id,
-    String firstName,
-    String lastName,
-    String userName,
-    String passWord,
-  ) async {
-    final users = await _readUsersFromFile();
+      String userId, Map<String, dynamic> updatedFields) async {
+    final prefs = await SharedPreferences.getInstance();
+    List<String> users = prefs.getStringList(_usersKey) ?? [];
 
-    // Locate the user by ID
-    final index = users.indexWhere((user) => user.id == id);
-    if (index == -1) {
-      throw Exception('User not found');
+    // Find the user by ID and update
+    for (int i = 0; i < users.length; i++) {
+      final userMap = jsonDecode(users[i]);
+      if (userMap['id'] == userId) {
+        // Remove the `id` key if it's present in the updatedFields to prevent modification
+        updatedFields.remove('id');
+
+        // Merge updated fields with existing user data
+        userMap.addAll(updatedFields);
+
+        // Replace the old user data with the updated data
+        users[i] = jsonEncode(userMap);
+        await prefs.setStringList(_usersKey, users);
+        return;
+      }
     }
 
-    // Ensure the username is unique for all users except the one being updated
-    final duplicateUser =
-        users.any((user) => user.userName == userName && user.id != id);
-    if (duplicateUser) {
-      throw Exception('Username already exists');
-    }
-
-    // Update user details
-    users[index] = User(
-      id: id,
-      firstName: firstName,
-      lastName: lastName,
-      userName: userName,
-      passWord: passWord,
-    );
-
-    // Save updated users to the file
-    await _writeUsersToFile(users);
+    throw Exception('User with ID $userId not found');
   }
 
   // Delete user
-  Future<void> deleteUser(User userToDelete) async {
-    print("Attempting to delete user with ID: ${userToDelete.id}");
-    try {
-      // Read all users from the JSON file
-      final users = await _readUsersFromFile();
+  Future<void> deleteUser(String userId) async {
+    final prefs = await SharedPreferences.getInstance();
+    List<String> users = prefs.getStringList(_usersKey) ?? [];
 
-      // Check initial length for comparison
-      final initialLength = users.length;
+    // Filter out the user with the matching ID
+    users = users.where((userJson) {
+      final userMap = jsonDecode(userJson);
+      return userMap['id'] != userId;
+    }).toList();
 
-      // Remove the user matching the ID
-      users.removeWhere((user) => user.id == userToDelete.id);
-
-      if (users.length < initialLength) {
-        // Write updated user list back to the file
-        await _writeUsersToFile(users);
-        print("User deleted successfully: ${userToDelete.id}");
-      } else {
-        print("User not found: ${userToDelete.id}");
-        throw Exception('User not found');
-      }
-    } catch (e) {
-      print("Error deleting user: $e");
-      throw Exception('Failed to delete user: $e');
-    }
+    // Save the updated user list
+    await prefs.setStringList(_usersKey, users);
   }
 }

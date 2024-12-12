@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:android_nga_flutter/home/home_page.dart';
+import 'package:flutter/material.dart';
 import 'package:android_nga_flutter/components/textfield.dart';
 import 'package:android_nga_flutter/signup/signup.dart';
 import 'package:android_nga_flutter/entity/userCont.dart';
@@ -12,7 +12,7 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  final _userController = UserController();
+  final _userController = UserCont(); // Reference to UserCont
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -22,12 +22,12 @@ class _LoginState extends State<Login> {
     if (_formKey.currentState?.validate() == true) {
       try {
         print('Attempting login...');
-        final user = await _userController.loginUser(
+        bool isAuthenticated = await _userController.loginUser(
           _usernameController.text.trim(),
           _passwordController.text.trim(),
         );
 
-        if (user != null) {
+        if (isAuthenticated) {
           // Loading screen
           showDialog(
             context: context,
@@ -38,18 +38,18 @@ class _LoginState extends State<Login> {
             },
           );
 
-          print('Login successful for user: ${user.userName}');
+          print('Login successful!');
 
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Login successful!')),
           );
 
-          // Navigate to the HomePage with the current user's data
-          Navigator.pushReplacement(
+          // Replace with your actual home navigation logic
+          Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => HomePage(currentUser: user), // Pass user object
-            ),
+                builder: (context) =>
+                    const HomePage()), // Replace with home page
           );
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -132,6 +132,7 @@ class _LoginState extends State<Login> {
                     onPressed: loginUser, // Call the login function
                     child: Container(
                       padding: EdgeInsets.all(25),
+                      // margin: EdgeInsets.symmetric(horizontal: 25),
                       decoration: BoxDecoration(
                         color: Colors.black,
                         borderRadius: BorderRadius.circular(10),

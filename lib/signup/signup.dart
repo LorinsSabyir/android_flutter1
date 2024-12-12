@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:android_nga_flutter/login/login.dart';
 
 class Signup extends StatelessWidget {
-  final _userController = UserController();
+  final _userController = UserCont();
 
   // Text Editing Controllers
   final _firstNameController = TextEditingController();
@@ -128,17 +128,20 @@ class Signup extends StatelessWidget {
                   ElevatedButton(
                     onPressed: () async {
                       if (_formKey.currentState?.validate() == true) {
+                        print('Form validation successful!'); // Debugging output
                         try {
+                          print('Attempting to register user...'); // Debugging output
                           await _userController.registerUser(
                             _firstNameController.text.trim(),
                             _lastNameController.text.trim(),
                             _usernameController.text.trim(),
                             _passwordController.text.trim(),
                           );
-
+                          print('User registration successful!'); // Debugging output
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
-                                content: Text('User registered successfully')),
+                              content: Text('User registered successfully'),
+                            ),
                           );
 
                           // Clear the text fields after success
@@ -154,6 +157,7 @@ class Signup extends StatelessWidget {
                             MaterialPageRoute(builder: (_) => const Login()),
                           );
                         } catch (e) {
+                          print('Error during registration: $e'); // Debugging output
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text(
@@ -164,6 +168,8 @@ class Signup extends StatelessWidget {
                             ),
                           );
                         }
+                      } else {
+                        print('Form validation failed.'); // Debugging output
                       }
                     },
                     child: Container(

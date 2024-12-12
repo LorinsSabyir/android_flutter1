@@ -1,4 +1,3 @@
-import 'package:android_nga_flutter/entity/userModel.dart';
 import 'package:android_nga_flutter/home/home_atbash.dart';
 import 'package:android_nga_flutter/home/home_ceasar.dart';
 import 'package:android_nga_flutter/home/home_vigenere.dart';
@@ -6,9 +5,7 @@ import 'package:android_nga_flutter/components/my_drawer.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
-  final User currentUser;
-
-  const HomePage({Key? key, required this.currentUser}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +16,7 @@ class HomePage extends StatelessWidget {
         foregroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text("Home Page"),
       ),
-      drawer: MyDrawer(currentUser: currentUser), // Pass currentUser to MyDrawer
+      drawer: const MyDrawer(),
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: ListView(
         children: [
