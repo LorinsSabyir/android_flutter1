@@ -22,7 +22,14 @@ class Signup extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[300],
-      body: SafeArea(
+      body:Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/darkteal.jpg'),
+              fit: BoxFit.cover,
+            )          
+          ),
+      child: SafeArea(
         child: Center(
           child: SingleChildScrollView(
             child: Form(
@@ -215,6 +222,7 @@ class Signup extends StatelessWidget {
             ),
           ),
         ),
+      ),
       ),
     );
   }
