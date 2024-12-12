@@ -155,14 +155,10 @@ class _LoginState extends State<Login> {
                     end: Alignment.bottomRight, // Ending point of the gradient
                   ),
                   borderRadius: BorderRadius.circular(10), // Same border radius
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black,
-                      offset: const Offset(3.0, 3.0),
-                      blurRadius: 10.0,
-                      spreadRadius: 1.0,
-                    ),
-                  ],
+                    border: Border.all(
+    color: Colors.black,  // Border color
+    width: 2.0,           // Border width
+  ),
                 ),
                 child: Center(
                   child: Text(

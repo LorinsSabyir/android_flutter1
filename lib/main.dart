@@ -1,9 +1,10 @@
 import 'package:android_nga_flutter/login/login.dart';
-import 'package:android_nga_flutter/ciphers/atbash.dart';
+//import 'package:android_nga_flutter/ciphers/atbash.dart';
 import 'package:flutter/material.dart';
-import 'package:android_nga_flutter/ciphers/caesar.dart';
-import 'package:android_nga_flutter/dashboard/dashboard.dart';
+//import 'package:android_nga_flutter/ciphers/caesar.dart';
+//import 'package:android_nga_flutter/dashboard/dashboard.dart';
 import 'package:android_nga_flutter/ciphers/vigenere.dart';
+import 'package:android_nga_flutter/testt/dashboard.dart';
 
 //import 'package:android_nga_flutter/ciphers/atbash.dart';
 
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Vigenere(),
+      home: Login(),
     );
   }
 }

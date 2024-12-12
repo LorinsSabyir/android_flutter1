@@ -41,7 +41,7 @@ class Signup extends StatelessWidget {
                   width: 200,
                   height: 200,),
                   const Text(
-                    'CREATE YOUR ACCOUNT!',
+                    'CREATE YOUR ACCOUNT',
                     style: TextStyle(                
                       fontSize: 25, 
                       fontWeight: FontWeight.bold),
@@ -196,14 +196,10 @@ class Signup extends StatelessWidget {
                       end: Alignment.bottomRight, // Ending point of the gradient
                     ),      // Custom background color                     
                         borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black,
-                              offset: const Offset(3.0, 3.0),
-                              blurRadius: 10.0,
-                              spreadRadius: 1.0,
-                            ),
-                          ],
+                           border: Border.all(
+    color: Colors.black,  // Border color
+    width: 2.0,           // Border width
+  ),
                       ),
                       child: const Center(
                         child: Text(
