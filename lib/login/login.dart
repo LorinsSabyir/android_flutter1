@@ -48,7 +48,8 @@ class _LoginState extends State<Login> {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => HomePage(currentUser: user), // Pass user object
+              builder: (context) =>
+                  HomePage(currentUser: user), // Pass user object
             ),
           );
         } else {
@@ -70,147 +71,152 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
- body:Container(
-          decoration: BoxDecoration(
+      body: Container(
+        decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage('assets/darkteal.jpg'),
-              fit: BoxFit.cover,
-            )          
-          ),
-      child: SafeArea(
-        child: Center(
-          child: SingleChildScrollView(
-            child: Form(
-              key: _formKey,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-          
-                  // Logo
-                    Image.asset('assets/l.png',
-                  width: 200,
-                  height: 200,),               
-                  const Text(
-                    'Hello! Welcome Back',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
+          image: AssetImage('assets/darkteal.jpg'),
+          fit: BoxFit.cover,
+        )),
+        child: SafeArea(
+          child: Center(
+            child: SingleChildScrollView(
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    // Logo
+                    Image.asset(
+                      'assets/l.png',
+                      width: 200,
+                      height: 200,
                     ),
-                  ),
-                  const SizedBox(height: 40),
-
-                  // Username TextField
-                  Textfield(
-                    controller: _usernameController,
-                    hintText: 'Username',
-                    obscureText: false,
-                    icon: Icons.person,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please input your Username';
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 20),
-
-                  // Password TextField
-                  Textfield(
-                    controller: _passwordController,
-                    hintText: 'Password',
-                    obscureText: true,
-                    icon: Icons.lock,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please input your Password';
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 30),
-
-                  // Login  Button
-                  Padding(  padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                  
-                  child: ElevatedButton(
-                    onPressed: loginUser, // Call the login function
-                      style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.transparent, // Use transparent background
-                      padding: EdgeInsets.zero,            // Remove default padding
-                      shadowColor: Colors.transparent,    // Remove default shadow
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10), // Match the border radius
+                    const Text(
+                      'Hello! Welcome Back',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                    child: Container(
-                padding: EdgeInsets.symmetric(vertical: 25.0),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      Color(0xFF08B1D8), // Light Blue
-                      Color(0xFF0C8DAC), // Teal
-                    ],
-                    begin: Alignment.topLeft, // Starting point of the gradient
-                    end: Alignment.bottomRight, // Ending point of the gradient
-                  ),
-                  borderRadius: BorderRadius.circular(10), // Same border radius
-                    border: Border.all(
-    color: Colors.black,  // Border color
-    width: 2.0,           // Border width
-  ),
-                ),
-                child: Center(
-                  child: Text(
-                    'Login',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
+                    const SizedBox(height: 40),
+
+                    // Username TextField
+                    Textfield(
+                      controller: _usernameController,
+                      hintText: 'Username',
+                      obscureText: false,
+                      icon: Icons.person,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please input your Username';
+                        }
+                        return null;
+                      },
                     ),
-                  ),
-                ),
-              ),
-              ),
-              ),
+                    const SizedBox(height: 20),
 
-              const SizedBox(height: 20),
+                    // Password TextField
+                    Textfield(
+                      controller: _passwordController,
+                      hintText: 'Password',
+                      obscureText: true,
+                      icon: Icons.lock,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please input your Password';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 30),
 
-                   // Sign Up Option
-                    Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text("Don't Have an Account?",
-                      style: TextStyle(
-                        fontSize: 15
-                      ),),
-                      const SizedBox(width: 6),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (_) => Signup()),
-                          );
-                        },
-                        child: const Text(
-                          "Sign Up",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15,
+                    // Login  Button
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                      child: ElevatedButton(
+                        onPressed: loginUser, // Call the login function
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              Colors.transparent, // Use transparent background
+                          padding: EdgeInsets.zero, // Remove default padding
+                          shadowColor:
+                              Colors.transparent, // Remove default shadow
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                                10), // Match the border radius
+                          ),
+                        ),
+                        child: Container(
+                          padding: EdgeInsets.symmetric(vertical: 25.0),
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [
+                                Color(0xFF08B1D8), // Light Blue
+                                Color(0xFF0C8DAC), // Teal
+                              ],
+                              begin: Alignment
+                                  .topLeft, // Starting point of the gradient
+                              end: Alignment
+                                  .bottomRight, // Ending point of the gradient
+                            ),
+                            borderRadius:
+                                BorderRadius.circular(10), // Same border radius
+                            border: Border.all(
+                              color: Colors.black, // Border color
+                              width: 2.0, // Border width
+                            ),
+                          ),
+                          child: Center(
+                            child: Text(
+                              'Login',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ),
                         ),
                       ),
-                    ],
-                  ),
-                ],
+                    ),
+
+                    const SizedBox(height: 20),
+
+                    // Sign Up Option
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          "Don't Have an Account?",
+                          style: TextStyle(fontSize: 15),
+                        ),
+                        const SizedBox(width: 6),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (_) => Signup()),
+                            );
+                          },
+                          child: const Text(
+                            "Sign Up",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
         ),
       ),
-    ),
     );
-
   }
 }
