@@ -1,10 +1,13 @@
 import 'package:android_nga_flutter/dashboard/dashboard.dart';
+import 'package:android_nga_flutter/entity/userModel.dart';
 import 'package:android_nga_flutter/login/login.dart';
 import 'package:flutter/material.dart';
 import 'package:android_nga_flutter/components/my_list_tile.dart';
 
 class MyDrawer extends StatelessWidget {
-  const MyDrawer({super.key});
+  final User currentUser; // Add currentUser parameter
+
+  const MyDrawer({Key? key, required this.currentUser}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +38,10 @@ class MyDrawer extends StatelessWidget {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (_) => Dashboard()),
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          Dashboard(currentUser: currentUser), // Pass currentUser to Dashboard
+                    ),
                   );
                 },
               ),
@@ -46,7 +52,7 @@ class MyDrawer extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(bottom: 25.0),
             child: MyListTile(
-              text: "Exit",
+              text: "Logout",
               icon: Icons.logout,
               onTap: () {
                 Navigator.push(
