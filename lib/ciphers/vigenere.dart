@@ -95,10 +95,18 @@ class _VigenereState extends State<Vigenere> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: Colors.black.withOpacity(0.1),
+        backgroundColor: Color(0xFF00646C),
       ),
-      backgroundColor: Colors.grey[300],
-      body: SafeArea(
+
+    body:Container(
+
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/bg4.jpeg'),
+              fit: BoxFit.cover,
+            )          
+          ),
+      child: SafeArea(
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -120,7 +128,7 @@ class _VigenereState extends State<Vigenere> {
                 controller: messageController,
                 hintText: 'Enter Message Here',
                 obscureText: false,
-                maxLines: 5,
+                maxLines: 3,
               ),
               SizedBox(height: 25),
               MyTextField(
@@ -136,16 +144,18 @@ class _VigenereState extends State<Vigenere> {
                     onTap: encrypt,
                     label: 'Encrypt',
                     width: 100,
+                    color: Color(0xFF1B4A56),
                   ),
                   Button(
                     onTap: decrypt,
                     label: 'Decrypt',
                     width: 100,
+                    color: Color(0xFF1B4A56),
                   ),
                   Button(
                     onTap: clearText,
                     label: 'Clear',
-                    color: Color.fromARGB(255, 143, 20, 12),
+                    color: Color(0xFFAC4040),
                     width: 100,
                   ),
                 ],
@@ -156,6 +166,7 @@ class _VigenereState extends State<Vigenere> {
           ),
         ),
       ),
+    ),
     );
   }
 }

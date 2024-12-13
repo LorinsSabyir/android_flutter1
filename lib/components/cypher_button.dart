@@ -20,18 +20,14 @@ class Button extends StatelessWidget {
       onTap: onTap,
       child: Container(
         width: width,  // Use provided width or default to automatic width
-        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 12),
         decoration: BoxDecoration(
           color: color ?? Color.fromARGB(255, 21, 22, 23),  // Use provided color or default color
           borderRadius: BorderRadius.circular(10),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.shade500,
-              offset: Offset(4.0, 4.0),
-              blurRadius: 15.0,
-              spreadRadius: 1.0,
-            ),
-          ],
+          border: Border.all(
+    color: Colors.black,  // Border color
+    width: 1.0,           // Border width
+  ),
         ),
         child: Center(
           child: Text(

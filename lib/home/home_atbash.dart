@@ -63,7 +63,7 @@ Widget build(BuildContext context) {
             ),
             const SizedBox(height: 5),
             Text(
-              "Vigenere Cipher is a method of encrypting alphabetic text. It uses a simple form of polyalphabetic substitution.",
+              "Atbash Cipher is a method of encrypting alphabetic text. It uses a simple form of polyalphabetic substitution.",
               style: TextStyle(
                  color: const Color.fromARGB(255, 0, 0, 0), // Change to the desired colors
                 fontSize: 14, // Adjusted font size for better fit
